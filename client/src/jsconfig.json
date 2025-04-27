@@ -1,0 +1,14 @@
+// This file is used by VSCode to provide IntelliSense and type checking for JavaScript files.
+// It is not required for the project to run, but it is recommended to have it for a better development experience.
+
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

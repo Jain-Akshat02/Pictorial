@@ -1,0 +1,27 @@
+import React from 'react';
+import Home from './elements/Home.jsx';
+import { Routes,Route } from 'react-router-dom';
+import Navbar from './elements/Navbar.jsx'
+import { Box } from '@chakra-ui/react';
+import CreatePage from './elements/CreatePage.jsx';
+import { useColorModeValue } from './components/ui/color-mode.jsx';
+import Login from "./userAuthPages/Login.jsx"
+import Signup from './userAuthPages/Signup.jsx';
+function App() {
+  
+
+  return (
+    <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
+      <Navbar/>
+      <Routes>
+          <Route path="/" element={<Home/>} /> 
+          <Route path="/create" element={<CreatePage/>} /> 
+          <Route path="/login" element={<Login/>} />
+          <Route path="/signup" element={<Signup/>} />
+      </Routes>
+    </Box>
+  )
+
+}
+
+export default App
