@@ -3,6 +3,7 @@ import { signupValidation, loginValidation } from '../middlewares/AuthValidation
 import { registerUser, loginUser } from '../components/user.controller.js';
 const router = express.Router();
 
+//complete url - http://localhost:5000/auth/{login, register}
 router.post('/login', loginValidation, loginUser);
 
 router.post('/register', signupValidation, registerUser);

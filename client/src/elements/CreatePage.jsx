@@ -12,6 +12,7 @@ const CreatePage = () => {
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
+  
   const handleImageChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };

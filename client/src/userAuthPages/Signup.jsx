@@ -1,21 +1,118 @@
-import {
-  Container,
-  Heading,
-  VStack,
-  Input,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Container, Heading, VStack, Input, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { useColorModeValue } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Toaster, toaster } from '../components/ui/toaster';
 const Signup = () => {
   const navigate = useNavigate();
   // Define colors for light and dark modes
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const textColor = useColorModeValue("gray.600", "gray.200");
   const inputBg = useColorModeValue("gray.50", "gray.700");
+
+
+  // Define the form submission handler
+
+  const [userInfo, setUserInfo] = React.useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const signupInfo = async (e) => {
+    e.preventDefault();
+
+    // Validate user input
+    const formData = new FormData();
+    formData.append("email", userInfo.email);
+    formData.append("password", userInfo.password);
+    formData.append("username", userInfo.username);
+    console.log(userInfo.username)
+    console.log(userInfo.email) 
+    console.log( userInfo.password)
+
+    if (userInfo.username === "" || userInfo.email === "" || userInfo.password === "") {
+      toaster("Please fill all the fields", "error");
+      return;
+    } 
+    if (userInfo.password.length < 6) {
+      toaster.create({
+              title: "Error",
+              description: "atleast 6 characters long password",
+              status: "error",
+              key: "uploading",
+            });
+      return;
+    }
+    if (!userInfo.email.includes("@")) {
+      toaster("Please enter a valid email address", "error");
+      return;
+    }
+    if (userInfo.username.length < 3) {
+      toaster("Username must be at least 3 characters long", "error");
+      return;
+    }
+
+    toaster.create({
+      title: "Please wait",
+      description: "Please wait while we set up your profile.",
+      status: "info",
+      key: "uploading",
+    });
+    try {
+      // Sending data to the server
+      const response = await axios.post("http://localhost:5000/auth/register", {
+        username: userInfo.username,
+        email: userInfo.email,
+        password: userInfo.password,
+      });
+  
+      console.log("Response:", response.data);
+  
+      toaster.create({
+        title: "Success",
+        description: "Signup successful!",
+        status: "success",
+        isClosable: true,
+        duration: 3000,
+      });
+  
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+    catch (error) {
+      console.error("Error during signup:", error);
+  
+      if (error.response?.status === 409) {
+        toaster.create({
+          title: "Email Already Registered, redirecting to Login page",
+          description: error.response.data.message || "This email is already registered. Please log in instead.",
+          status: "error",
+          isClosable: true,
+        });
+  
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
+      } else {
+        toaster.create({
+          title: "Error",
+          description: error.response?.data?.message || "An error occurred during signup.",
+          status: "error",
+          isClosable: true,
+        });
+      }
+    }
+  }
+
+
+
+
+
+  
 
   return (
     <Container
@@ -27,13 +124,36 @@ const Signup = () => {
       boxShadow="lg"
       bg={bgColor}
     >
+      <Toaster toastOptions={{
+              duration: 5000,
+              style: {
+                background: "white",
+                color: "black",
+              },
+              isClosable: true,
+            }} />
       <Heading mb={6} textAlign="center" color="blue.500">
         Signup{" "}
       </Heading>
-      <VStack spacing={4} as="form">
+      <VStack spacing={4} as="form" width="100%">
+        {/* Username Field */}
+        <FormControl id="Username" isRequired>
+          <FormLabel fontSize="lg" color="gray.700" fontWeight="bold" >
+            Username
+          </FormLabel>
+          <Input
+            type="Username"
+            placeholder="Enter Username"
+            size="lg"
+            bg={inputBg}
+            width="100%"
+            onChange={(e) => setUserInfo({ ...userInfo, username: e.target.value })}
+            value={userInfo.username}
+          />
+        </FormControl>
         {/* Email Field */}
         <FormControl id="email" isRequired>
-          <FormLabel fontSize="lg" color="gray.700">
+          <FormLabel fontSize="lg" color="gray.700" fontWeight="bold">
             Email address
           </FormLabel>
           <Input
@@ -41,27 +161,31 @@ const Signup = () => {
             placeholder="Enter email"
             size="lg"
             bg={inputBg}
-            focusBorderColor="blue.400"
-            width="100%"
+            onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
+            value={userInfo.email}
           />
-          <Text fontSize="sm" color="gray.500" mt={1}>
+          {/* <Text fontSize="sm" color="gray.500" mt={1}>
+            We'll never share your email with anyone else.
+          </Text> */}
+        </FormControl>
+        <Text fontSize="sm" color="gray.500" mt={1}>
             We'll never share your email with anyone else.
           </Text>
-        </FormControl>
 
         {/* Password Field */}
         <FormControl id="password" isRequired>
-          <FormLabel fontSize="lg" color={textColor}>
+          <FormLabel fontSize="lg" color={textColor} fontWeight="bold">
             {" "}
-            Password{" "}
+            Password
           </FormLabel>
           <Input
             type="password"
             placeholder="Enter password"
             size="lg"
-            focusBorderColor="blue.400"
             bg={inputBg}
             width="100%"
+            onChange={(e) => setUserInfo({ ...userInfo, password: e.target.value })}
+            value={userInfo.password}
           />
           
         </FormControl>
@@ -80,6 +204,7 @@ const Signup = () => {
           type="submit"
           width="full"
           _hover={{ bg: "blue.600" }}
+          onClick={ signupInfo }
         >
           Sign Up
         </Button>
