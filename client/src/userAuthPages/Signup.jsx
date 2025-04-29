@@ -66,8 +66,8 @@ const Signup = () => {
           
         </FormControl>
         <Text fontSize="sm" color="gray.500" mt={1}>
-            We are using bcrypt hashing algorithm,even we can't see it.
-          </Text>
+            Your password is safe with bcrypt hasing algorithm.
+        </Text>
 
         {/* Checkbox */}
         {/* <FormControl>

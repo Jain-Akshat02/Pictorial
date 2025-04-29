@@ -12,7 +12,7 @@ const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const navigate = useNavigate();
   return (
-    <Container maxW={"1140px"} p={4}  bg={colorMode === "dark" ? "slate.700" : "gray.100"} // Dynamic background color
+    <Container maxW={"1270px"} p={4}  bg={colorMode === "dark" ? "slate.700" : "gray.100"} // Dynamic background color
     color={colorMode === "dark" ? "white" : "black"}>
       
       <Flex
@@ -45,6 +45,7 @@ const Navbar = () => {
               <IoSunny style={{ width: "25px", height: "25px" }} />
             )}
           </Button>
+          <Button onClick={() => navigate("/Signup")}>SignUp</Button>
         </HStack>
         
        
