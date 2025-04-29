@@ -38,7 +38,7 @@ const CreatePage = () => {
 
     toaster.create({
       title: "Please wait",
-      description: "Please wait while we upload your file.",
+      description: "Please wait while we upload your file. This may take a few seconds.",
       status: "info",
       key: "uploading",
     });
