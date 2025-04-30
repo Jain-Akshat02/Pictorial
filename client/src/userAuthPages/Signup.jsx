@@ -31,7 +31,7 @@ const Signup = () => {
     formData.append("username", userInfo.username);
     console.log(userInfo.username)
     console.log(userInfo.email) 
-    console.log( userInfo.password)
+    // console.log( userInfo.password)
 
     if (userInfo.username === "" || userInfo.email === "" || userInfo.password === "") {
       toaster("Please fill all the fields", "error");
@@ -45,9 +45,15 @@ const Signup = () => {
               key: "uploading",
             });
       return;
+      
     }
-    if (!userInfo.email.includes("@")) {
-      toaster("Please enter a valid email address", "error");
+    if (!userInfo.email.includes("@") && !userInfo.email.includes(".com")) {
+      toaster.create({
+        title: "Error",
+        description: "enter a valid email address",
+        status: "error",
+        key: "uploading",
+      });
       return;
     }
     if (userInfo.username.length < 3) {
@@ -73,47 +79,57 @@ const Signup = () => {
   
       toaster.create({
         title: "Success",
-        description: "Signup successful!",
+        description: "Signup successful! Redirecting to login page...",
         status: "success",
         isClosable: true,
         duration: 3000,
       });
   
       setTimeout(() => {
-        navigate("/");
+        navigate("/login");
       }, 3000);
     }
     catch (error) {
-      console.error("Error during signup:", error);
-  
-      if (error.response?.status === 409) {
-        toaster.create({
-          title: "Email Already Registered, redirecting to Login page",
-          description: error.response.data.message || "This email is already registered. Please log in instead.",
-          status: "error",
-          isClosable: true,
-        });
-  
-        setTimeout(() => {
-          navigate("/login");
-        }, 1000);
+      if (error.response) {
+        const errorMessage = error.response.data.message || error.response.data;
+        
+        if (errorMessage.includes('duplicate key') && errorMessage.includes('username')) {
+          toaster.create({
+            title: "Username Already Taken",
+            description: "This username is already taken. Please choose another one.",
+            status: "error",
+            isClosable: true,
+            duration: 3000,
+          });
+        } else if (errorMessage === "User already exists") {
+          toaster.create({
+            title: "Email Already Registered",
+            description: "This email is already registered. Please log in instead.",
+            status: "error",
+            isClosable: true,
+            duration: 3000,
+          });
+          setTimeout(() => {
+            navigate("/login");
+          }, 3000);
+        } else {
+          toaster.create({
+            title: "Error",
+            description: errorMessage || "An error occurred during signup. Please try again.",
+            status: "error",
+            isClosable: true,
+          });
+        }
       } else {
         toaster.create({
           title: "Error",
-          description: error.response?.data?.message || "An error occurred during signup.",
+          description: "An unexpected error occurred. Please try again.",
           status: "error",
           isClosable: true,
         });
       }
     }
   }
-
-
-
-
-
-  
-
   return (
     <Container
       maxW="md"
