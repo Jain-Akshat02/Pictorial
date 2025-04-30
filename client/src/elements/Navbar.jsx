@@ -6,6 +6,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { IoSunny } from "react-icons/io5";
 import { useColorMode } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
+import Profile from "./ProfileCard.jsx";
 
 const Navbar = () => {
   

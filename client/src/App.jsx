@@ -7,6 +7,7 @@ import CreatePage from './elements/CreatePage.jsx';
 import { useColorModeValue } from './components/ui/color-mode.jsx';
 import Login from "./userAuthPages/Login.jsx"
 import Signup from './userAuthPages/Signup.jsx';
+import Profile from './elements/ProfileCard.jsx';
 function App() {
   
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/create" element={<CreatePage/>} /> 
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
+          <Route path="/profile" element={<Profile/>} />
       </Routes>
     </Box>
   )
