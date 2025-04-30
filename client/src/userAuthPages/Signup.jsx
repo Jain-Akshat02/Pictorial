@@ -5,6 +5,8 @@ import { useColorModeValue } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toaster } from '../components/ui/toaster';
+
+
 const Signup = () => {
   const navigate = useNavigate();
   // Define colors for light and dark modes
@@ -180,9 +182,7 @@ const Signup = () => {
             onChange={(e) => setUserInfo({ ...userInfo, email: e.target.value })}
             value={userInfo.email}
           />
-          {/* <Text fontSize="sm" color="gray.500" mt={1}>
-            We'll never share your email with anyone else.
-          </Text> */}
+
         </FormControl>
         <Text fontSize="sm" color="gray.500" mt={1}>
             We'll never share your email with anyone else.
