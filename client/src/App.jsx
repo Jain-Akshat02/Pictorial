@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Home from './elements/Home.jsx';
 import { Routes,Route } from 'react-router-dom';
 import Navbar from './elements/Navbar.jsx'
@@ -8,9 +8,12 @@ import { useColorModeValue } from './components/ui/color-mode.jsx';
 import Login from "./userAuthPages/Login.jsx"
 import Signup from './userAuthPages/Signup.jsx';
 import Profile from './elements/ProfileCard.jsx';
-function App() {
-  
+import Logout from './userAuthPages/Logout.jsx';
+import ProfileCard from './elements/ProfileCard.jsx';
 
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
     <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
       <Navbar/>
@@ -20,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/logout" element={<Logout/>} />
       </Routes>
     </Box>
   )

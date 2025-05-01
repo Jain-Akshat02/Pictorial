@@ -7,6 +7,9 @@ import { IoSunny } from "react-icons/io5";
 import { useColorMode } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
 import Profile from "./ProfileCard.jsx";
+import ProfileButton from "../components/ProfileButton";
+
+
 
 const Navbar = () => {
   
@@ -46,7 +49,8 @@ const Navbar = () => {
               <IoSunny style={{ width: "25px", height: "25px" }} />
             )}
           </Button>
-          <Button onClick={() => navigate("/Signup")}>SignUp</Button>
+          
+            <Button onClick={() => navigate("/Signup")}>SignUp</Button>
         </HStack>
         
        

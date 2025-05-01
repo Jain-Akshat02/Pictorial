@@ -55,8 +55,13 @@ const Login = () => {
       
       // Check if we have a successful response
       if (response.data.success && response.data.jwtToken) {
-        console.log("Login successful, storing token");
-        localStorage.setItem("token", response.data.jwtToken);
+        console.log("Login successful, storing token" );
+        
+        
+        localStorage.setItem("jwtToken", response.data.jwtToken);
+        localStorage.setItem("userInfo", JSON.stringify({
+          email: response.data.email,
+        }));
 
         toaster.create({
           title: "Success",
