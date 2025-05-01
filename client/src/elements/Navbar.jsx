@@ -1,4 +1,4 @@
-import { Button, Container, Flex, Link, Text, HStack } from "@chakra-ui/react";
+import { Button, Container, Flex, Link, Text, HStack , Spacer} from "@chakra-ui/react";
 import React from "react";
 import { IoMdPhotos } from "react-icons/io";
 import { CiSquarePlus } from "react-icons/ci";
@@ -11,10 +11,10 @@ import ProfileButton from "../components/ProfileButton";
 
 
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, setShowProfile }) => {
+  const navigate = useNavigate();
   
   const { colorMode, toggleColorMode } = useColorMode();
-  const navigate = useNavigate();
   return (
     <Container maxW={"1270px"} p={4}  bg={colorMode === "dark" ? "slate.700" : "gray.100"} // Dynamic background color
     color={colorMode === "dark" ? "white" : "black"}>

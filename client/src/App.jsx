@@ -14,6 +14,17 @@ import ProfileCard from './elements/ProfileCard.jsx';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  const [showProfile, setShowProfile] = useState(false);
+
+  useEffect(()=>{
+    const jwtToken = localStorage.getItem("jwtToken");
+    const user = localStorage.getItem("userInfo");
+    if(jwtToken && user){
+      setIsLoggedIn(true);
+      setUserInfo(JSON.parse(user));
+    }
+  }, []);
   return (
     <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
       <Navbar/>
@@ -25,6 +36,12 @@ function App() {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/logout" element={<Logout/>} />
       </Routes>
+      {showProfile && (
+        <ProfileCard
+          userInfo={userInfo}
+          onClose={() => setShowProfile(false)}
+        />
+      )}
     </Box>
   )
 

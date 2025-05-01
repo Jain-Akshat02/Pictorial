@@ -43,7 +43,7 @@ const Login = () => {
         isClosable: true
     });
 
-    try {
+    try{
       console.log("Sending login request with:", loginInfo);
       const response = await axios.post("http://localhost:5000/auth/login", 
         {
@@ -65,7 +65,7 @@ const Login = () => {
 
         toaster.create({
           title: "Success",
-          description: "Login successful! Redirecting...",
+          description: "Login successful! Happy Pictorizing!",
           status: "success",
           duration: 2000,
         });
@@ -100,8 +100,6 @@ const Login = () => {
       }
     }
   };
-
-
 
   const [loginInfo, setloginInfo] = React.useState({
     email: "",
