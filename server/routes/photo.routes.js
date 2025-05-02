@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Photo from '../models/Pictures.model.js';
+import { verifyUser } from '../middlewares/verifyUser.middleware.js';
 
 
     express.json(),
