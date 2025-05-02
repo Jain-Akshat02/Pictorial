@@ -5,6 +5,7 @@ import {
   Link,
   Text,
   HStack,
+  IconButton,
   Spacer,
 } from "@chakra-ui/react";
 import React from "react";
@@ -14,6 +15,7 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { IoSunny } from "react-icons/io5";
 import { useColorMode } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
+import { PiHamburger } from "react-icons/pi";
 import Profile from "./ProfileCard.jsx";
 
 const Navbar = ({ isLoggedIn, setShowProfile }) => {
@@ -31,7 +33,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
         justifyContent={"space-between"}
         alignItems="center"
         flexDir={{
-          base: "column",
+          base: "row", //for mobile
           sm: "row",
         }}
       >
@@ -50,7 +52,8 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
             />{" "}
           </Link>
         </Text>
-        <HStack spacing={4}>
+        
+        <HStack spacing={4} display={{ base: "none", md: "flex" }}>
           <Button
             color={colorMode === "dark" ? "black" : "white"}
             size={"sm"}
