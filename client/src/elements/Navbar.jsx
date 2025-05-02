@@ -1,4 +1,12 @@
-import { Button, Container, Flex, Link, Text, HStack , Spacer} from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Flex,
+  Link,
+  Text,
+  HStack,
+  Spacer,
+} from "@chakra-ui/react";
 import React from "react";
 import { IoMdPhotos } from "react-icons/io";
 import { CiSquarePlus } from "react-icons/ci";
@@ -7,18 +15,18 @@ import { IoSunny } from "react-icons/io5";
 import { useColorMode } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
 import Profile from "./ProfileCard.jsx";
-import ProfileButton from "../components/ProfileButton";
-
-
 
 const Navbar = ({ isLoggedIn, setShowProfile }) => {
   const navigate = useNavigate();
-  
+
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Container maxW={"1270px"} p={4}  bg={colorMode === "dark" ? "slate.700" : "gray.100"} // Dynamic background color
-    color={colorMode === "dark" ? "white" : "black"}>
-      
+    <Container
+      maxW={"1270px"}
+      p={4}
+      bg={colorMode === "dark" ? "slate.700" : "gray.100"} // Dynamic background color
+      color={colorMode === "dark" ? "white" : "black"}
+    >
       <Flex
         justifyContent={"space-between"}
         alignItems="center"
@@ -35,25 +43,39 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
           color={"blue.400"}
           fontFamily={"sans-serif"}
         >
-          <Link href="/" style={{ color: "inherit" }}>PiCTORIAL<IoMdPhotos style={{ width: "28px", height: "28px", color: "inherit" }}/> </Link>
-
+          <Link href="/" style={{ color: "inherit" }}>
+            PiCTORIAL
+            <IoMdPhotos
+              style={{ width: "28px", height: "28px", color: "inherit" }}
+            />{" "}
+          </Link>
         </Text>
         <HStack spacing={4}>
-          <Button color={colorMode==="dark"? "black": "white"} size={"sm"} onClick={() => navigate("/create")}>
+          <Button
+            color={colorMode === "dark" ? "black" : "white"}
+            size={"sm"}
+            onClick={() => navigate("/create")}
+          >
             <CiSquarePlus style={{ width: "25px", height: "25px" }} />
           </Button>
-          <Button  color={colorMode==="dark"? "black": "white"} size={"sm"} onClick={toggleColorMode}>
+          <Button
+            color={colorMode === "dark" ? "black" : "white"}
+            size={"sm"}
+            onClick={toggleColorMode}
+          >
             {colorMode === "dark" ? (
               <IoSunnyOutline style={{ width: "25px", height: "25px" }} />
             ) : (
               <IoSunny style={{ width: "25px", height: "25px" }} />
             )}
           </Button>
-          
-            <Button onClick={() => navigate("/Signup")}>SignUp</Button>
+
+          {isLoggedIn ? (
+            <Button onClick={() => setShowProfile(true)}>Profile</Button>
+          ) : (
+            <Button onClick={() => navigate("/signup")}>SignUp</Button>
+          )}
         </HStack>
-        
-       
       </Flex>
     </Container>
   );

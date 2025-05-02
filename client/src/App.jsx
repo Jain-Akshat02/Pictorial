@@ -25,13 +25,14 @@ function App() {
       setUserInfo(JSON.parse(user));
     }
   }, []);
+
   return (
     <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
-      <Navbar/>
+      <Navbar isLoggedIn={isLoggedIn} setShowProfile={setShowProfile}/>
       <Routes>
           <Route path="/" element={<Home/>} /> 
           <Route path="/create" element={<CreatePage/>} /> 
-          <Route path="/login" element={<Login/>} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo}/>} />
           <Route path="/signup" element={<Signup/>} />
           <Route path="/profile" element={<Profile/>} />
           <Route path="/logout" element={<Logout/>} />

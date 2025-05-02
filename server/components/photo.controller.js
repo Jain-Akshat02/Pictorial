@@ -1,5 +1,6 @@
 import Photo from "../models/Pictures.model.js";
 import mongoose from "mongoose";
+
 export const getPhotos = async (req,res)=>{
     try {
         const photos = await Photo.find({});
@@ -36,9 +37,7 @@ export const createPhotos = async (req,res)=>{
         res.status(200).json({sucess: true, message: "Photo updated successfully", data: updatedPhoto});
     } catch (error) {
         res.status(500).json({sucess: false, message: "Error updating photo", error});
-        
     }
-
  }
 
  export const deletePhoto = async (req,res) => {

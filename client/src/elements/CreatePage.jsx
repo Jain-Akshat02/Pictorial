@@ -4,6 +4,8 @@ import React from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 import { Toaster, toaster } from '../components/ui/toaster';
+import { useNavigate } from 'react-router-dom';
+
 const CreatePage = () => {
   const [newPhoto , setNewPhoto] = React.useState({
     title: "",
@@ -12,6 +14,33 @@ const CreatePage = () => {
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
+  const navigate = useNavigate();
+
+  const jwtToken = localStorage.getItem("jwtToken");
+  
+  if(!jwtToken){
+    return(
+      <Container maxW="lg" mx="auto" textAlign="center" py={8} borderWidth='1px' borderColor='peachpuff' borderRadius='lg' boxShadow='lg'>
+        <Toaster
+          toastOptions={{
+            duration: 5000,
+            style: {
+              background: "white",
+              color: "black",
+            },
+            isClosable: true,
+          }}
+        />
+        <Heading mb={6}>You need to be logged in to upload photos</Heading>
+        <Button colorScheme="blue" onClick={() => navigate("/signup")} mr={4}>
+          Sign Up
+        </Button>
+        <Button colorScheme="gray" onClick={() => navigate(-1)}>
+          No Thanks
+        </Button>
+      </Container>
+    );
+  }
   
   const handleImageChange = (event) => {
     setSelectedFile(event.target.files[0]);

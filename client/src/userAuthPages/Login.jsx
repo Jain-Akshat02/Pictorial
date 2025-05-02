@@ -12,7 +12,8 @@ import axios from "axios";
 import { Toaster, toaster } from "../components/ui/toaster";
 import React from "react";
 
-const Login = () => {
+const Login = ({setIsLoggedIn, setUserInfo}) => {
+  
   const navigate = useNavigate();
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const textColor = useColorModeValue("gray.600", "gray.200");
@@ -27,8 +28,9 @@ const Login = () => {
         description: "Please enter all fields",
         status: "error",
       });
+      return;
     }
-    if (!loginInfo.email.includes("@") && !loginInfo.email.includes(".com")) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(loginInfo.email)) {
       toaster.create({
           title: "Error",
           description: "Please enter a valid email address",
@@ -60,8 +62,16 @@ const Login = () => {
         
         localStorage.setItem("jwtToken", response.data.jwtToken);
         localStorage.setItem("userInfo", JSON.stringify({
-          email: response.data.email,
+          email: response.data.user.email,
+          username: response.data.user.username,
         }));
+
+        //Update the state in App.jsx
+        setIsLoggedIn(true);
+        setUserInfo({
+          email: response.data.user.email,
+          username: response.data.user.username,
+        });
 
         toaster.create({
           title: "Success",

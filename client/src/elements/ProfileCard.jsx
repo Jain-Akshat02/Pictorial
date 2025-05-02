@@ -35,15 +35,11 @@ const ProfileCard = ({ userInfo , onClose }) => {
           <Text fontSize="xl" fontWeight="bold">
             Profile
           </Text>
-          {/* <IconButton
-            icon={<CloseIcon />}
-            size="sm"
-            onClick={onClose}
-            aria-label="Close Profile"
-          /> */}
           <IoMdClose
           size="25px"
-          onClick={onClose}
+          onClick={()=>{
+            if(onClose) onClose()
+          }}
           aria-label="Close Profile"
           style={{ cursor: "pointer", color: "gray.500" }}
            />

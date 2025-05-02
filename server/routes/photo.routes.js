@@ -7,8 +7,9 @@ const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import { error } from 'console';
 import Photo from '../models/Pictures.model.js';
+
+
     express.json(),
     router.get("/", getPhotos),
     router.put('/:id', updatePhoto )

@@ -39,18 +39,20 @@ export const loginUser = async (req, res) => {
         if (!isPassEqual) {
             return res.status(400).json({ message: 'Invalid password' });
         }
+        //Generate JWT token
         const jwtToken = jwt.sign(
             { email: user.email, _id: user._id },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         )
+        //Return the response with jwt token and usernname
         res.status(200).json({
             message: 'Login successfull',
             success: true,
             jwtToken,
-            email: user.email,
+            user:{email: user.email,
             userId: user._id,
-            username: user.username
+            username: user.username}
         });
     } catch (error) {
         res.status(400).json({ success: false , message: error.message });   
