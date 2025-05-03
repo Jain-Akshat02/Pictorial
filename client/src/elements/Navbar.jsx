@@ -5,54 +5,114 @@ import {
   Link,
   Text,
   HStack,
-  IconButton,
-  Spacer,
+  VStack,
+  Drawer,
+  useDisclosure,
+  Image,
 } from "@chakra-ui/react";
 import React from "react";
 import { IoMdPhotos } from "react-icons/io";
 import { CiSquarePlus } from "react-icons/ci";
 import { IoSunnyOutline } from "react-icons/io5";
 import { IoSunny } from "react-icons/io5";
-import { useColorMode } from "../components/ui/color-mode";
+import { useColorModeValue, useColorMode } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
-import { PiHamburger } from "react-icons/pi";
+import { RxHamburgerMenu } from "react-icons/rx";
 import Profile from "./ProfileCard.jsx";
+import DarkModeLogo from '../components/ui/DarkModeLogo.png'
+import LightModeLogo from '../components/ui/LightModeLogo.png'
+
 
 const Navbar = ({ isLoggedIn, setShowProfile }) => {
   const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const bgColor = useColorModeValue("gray.100", "slate.700");
+  const textColor = useColorModeValue("black", "white");
+
+  const MobileMenu = () =>(
+    <VStack spacing={4} align="stretch" p={4}>
+      <Button 
+        LeftIcon={<CiSquarePlus />}
+        variant="ghost"
+        onClick={() => navigate("/create")}
+        justifyContent="flex-start"
+        >
+          Create
+        </Button>
+        <Button 
+          LeftIcon={colorMode === "dark" ? <IoSunnyOutline /> : <IoSunny />}
+          variant="ghost"
+          onClick={toggleColorMode}
+          justifyContent="flex-start"
+          >
+            {colorMode === "dark" ? "Light" : "Dark"}
+          </Button>
+          {isLoggedIn ? (
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setShowProfile(true);
+            onClose();
+          }}
+          justifyContent="flex-start"
+        >
+          Profile
+        </Button>
+      ) : (
+        <Button
+          variant="ghost"
+          onClick={() => {
+            navigate("/signup");
+            onClose();
+          }}
+          justifyContent="flex-start"
+        >
+          Sign Up
+        </Button>
+      )}
+    </VStack>
+  )
+
+
 
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Container
       maxW={"1270px"}
       p={4}
-      bg={colorMode === "dark" ? "slate.700" : "gray.100"} // Dynamic background color
-      color={colorMode === "dark" ? "white" : "black"}
+      bg={bgColor} // Dynamic background color
+      color={textColor}
+      position="sticky"
+      top={0}
+      zIndex={1}
+      boxShadow="sm"
     >
       <Flex
         justifyContent={"space-between"}
         alignItems="center"
-        flexDir={{
-          base: "row", //for mobile
-          sm: "row",
-        }}
+        flexDir={"row"}
       >
         <Text
-          fontSize={{ base: "22", sm: "28" }}
+          fontSize={{ base: "22px", sm: "28px" }}
           fontWeight={"bold"}
-          // textTransform="uppercase"
           textAlign={"center"}
           color={"blue.400"}
           fontFamily={"sans-serif"}
+          _hover={{transform: "scale(1.05)", transition: "transform 0.2s"}}
         >
-          <Link href="/" style={{ color: "inherit" }}>
-            PiCTORIAL
-            <IoMdPhotos
-              style={{ width: "28px", height: "28px", color: "inherit" }}
-            />{" "}
+          <Link href="/" style={{ color: "inherit", textDecoration: "none" }} display="flex" alignItems="center">
+          <Image
+              src={colorMode === "dark" ? DarkModeLogo : LightModeLogo}
+              borderRadius="full"
+              alt="PiCTORIAL Logo"
+              height="auto"
+              width="70px"
+              mr={2}
+              objectFit="contain"
+            />
           </Link>
         </Text>
-        
+        {/* Desktop Menu */}
         <HStack spacing={4} display={{ base: "none", md: "flex" }}>
           <Button
             color={colorMode === "dark" ? "black" : "white"}
@@ -74,12 +134,30 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
           </Button>
 
           {isLoggedIn ? (
-            <Button onClick={() => setShowProfile(true)}>Profile</Button>
+            <Button onClick={() => setShowProfile(true)}
+            variant="ghost"
+            >Profile</Button>
           ) : (
             <Button onClick={() => navigate("/signup")}>SignUp</Button>
           )}
         </HStack>
+
+        {/* Mobile Menu */}
+        {/* <RxHamburgerMenu /> */}
+
+        
       </Flex>
+      {/* Drawer */}
+      {/* <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerBody>
+            <MobileMenu />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer> */}
     </Container>
   );
 };

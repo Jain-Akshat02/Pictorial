@@ -11,6 +11,9 @@
     "dev": " nodemon server.js"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.17.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
     "cloudinary": "^2.6.0",
@@ -19,6 +22,7 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "file-uri-to-path": "^2.0.0",
+    "framer-motion": "^12.9.4",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.13.2",
