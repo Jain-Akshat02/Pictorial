@@ -1,15 +1,4 @@
-import {
-  Button,
-  Container,
-  Flex,
-  Link,
-  Text,
-  HStack,
-  VStack,
-  Drawer,
-  useDisclosure,
-  Image,
-} from "@chakra-ui/react";
+import {Button,Container,Flex,Link,Text,HStack,VStack,Drawer,useDisclosure,Image} from "@chakra-ui/react";
 import React from "react";
 import { IoMdPhotos } from "react-icons/io";
 import { CiSquarePlus } from "react-icons/ci";
@@ -17,10 +6,10 @@ import { IoSunnyOutline } from "react-icons/io5";
 import { IoSunny } from "react-icons/io5";
 import { useColorModeValue, useColorMode } from "../components/ui/color-mode";
 import { useNavigate } from "react-router-dom";
-import { RxHamburgerMenu } from "react-icons/rx";
 import Profile from "./ProfileCard.jsx";
 import DarkModeLogo from '../components/ui/DarkModeLogo.png'
 import LightModeLogo from '../components/ui/LightModeLogo.png'
+import { CiUser } from "react-icons/ci";
 
 
 const Navbar = ({ isLoggedIn, setShowProfile }) => {
@@ -136,7 +125,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
           {isLoggedIn ? (
             <Button onClick={() => setShowProfile(true)}
             variant="ghost"
-            >Profile</Button>
+            ><CiUser /></Button>
           ) : (
             <Button onClick={() => navigate("/signup")}>SignUp</Button>
           )}
@@ -158,6 +147,21 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
           </DrawerBody>
         </DrawerContent>
       </Drawer> */}
+
+<Drawer.Root>
+  <Drawer.Backdrop />
+  <Drawer.Trigger />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.CloseTrigger />
+      <Drawer.Header>
+        <MobileMenu />
+      </Drawer.Header>
+      <Drawer.Body />
+      <Drawer.Footer />
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
     </Container>
   );
 };
