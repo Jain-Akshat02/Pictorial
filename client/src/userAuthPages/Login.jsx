@@ -1,23 +1,32 @@
-import {
-  Container,
-  Heading,
-  VStack,
-  Input,
-  Button,
-} from "@chakra-ui/react";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { useColorModeValue } from "../components/ui/color-mode";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toaster } from "../components/ui/toaster";
-import React from "react";
+import { useColorModeValue } from "../components/ui/color-mode";
 
 const Login = ({setIsLoggedIn, setUserInfo}) => {
-  
   const navigate = useNavigate();
-  const bgColor = useColorModeValue("gray.100", "gray.800");
-  const textColor = useColorModeValue("gray.600", "gray.200");
-  const inputBg = useColorModeValue("gray.50", "gray.700");
+  const [loginInfo, setloginInfo] = React.useState({
+    email: "",
+    password: "",
+  });
+
+  // Get color mode values
+  const bgColor = useColorModeValue(
+    "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)"
+  );
+  const cardBg = useColorModeValue(
+    "rgba(255, 255, 255, 0.95)",
+    "rgba(26, 32, 44, 0.95)"
+  );
+  const textColor = useColorModeValue("#4a5568", "#a0aec0");
+  const inputBg = useColorModeValue("#f8fafc", "#2d3748");
+  const inputBorder = useColorModeValue("#e2e8f0", "#4a5568");
+  const headingGradient = useColorModeValue(
+    "linear-gradient(45deg, #4a5568, #2d3748)",
+    "linear-gradient(45deg, #a0aec0, #718096)"
+  );
 
   const verifyUser = async (e) => {
     e.preventDefault();
@@ -111,89 +120,164 @@ const Login = ({setIsLoggedIn, setUserInfo}) => {
     }
   };
 
-  const [loginInfo, setloginInfo] = React.useState({
-    email: "",
-    password: "",
-  });
-
   return (
-    <Container
-      maxW="md"
-      py={8}
-      px={6}
-      borderWidth={1}
-      borderRadius="lg"
-      boxShadow="lg"
-      bg={bgColor}
-    >
-      <Toaster
-        toastOptions={{
-          duration: 5000,
-          style: {
-            background: "white",
-            color: "black",
-          },
-          isClosable: true,
-        }}
-      />
-      <Heading mb={6} textAlign="center" color="blue.500">
-        Login{" "}
-      </Heading>
-      <VStack spacing={4} as="form" width="100%">
-        <FormControl id="email" isRequired>
-          <FormLabel fontSize="lg" color="gray.700" fontWeight="bold">
-            Email address
-          </FormLabel>
-          <Input
-            type="email"
-            placeholder="Enter email"
-            size="lg"
-            bg={inputBg}
-            onChange={(e) =>
-              setloginInfo({ ...loginInfo, email: e.target.value })
-            }
-            value={loginInfo.email}
-          />
-        </FormControl>
-        <FormControl id="password" isRequired>
-          <FormLabel fontSize="lg" color="gray.700" fontWeight="bold">
-            Passowrd
-          </FormLabel>
-          <Input
-            type="password"
-            placeholder="Enter password"
-            size="lg"
-            bg={inputBg}
-            onChange={(e) =>
-              setloginInfo({ ...loginInfo, password: e.target.value })
-            }
-            value={loginInfo.password}
-          />
-        </FormControl>
-            <br></br>
-        <Button
-          colorScheme="blue"
-          type="submit"
-          width="full"
-          _hover={{ bg: "blue.600" }}
-          onClick={verifyUser}
-        >
-          Login
-        </Button>
+    <div style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: bgColor,
+      padding: "20px"
+    }}>
+      <div style={{
+        width: "100%",
+        maxWidth: "450px",
+        background: cardBg,
+        borderRadius: "20px",
+        padding: "40px",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(255, 255, 255, 0.2)"
+      }}>
+        <Toaster
+          toastOptions={{
+            duration: 5000,
+            style: {
+              background: "white",
+              color: "black",
+            },
+            isClosable: true,
+          }}
+        />
+        
+        <h1 style={{
+          textAlign: "center",
+          fontSize: "2.5rem",
+          fontWeight: "700",
+          marginBottom: "30px",
+          background: headingGradient,
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent"
+        }}>
+          Welcome Back
+        </h1>
 
-        <Button
-        colorScheme="gray"
-        variant="outline"
-        width="full"
-        onClick={() => navigate("/signup")}
-        _hover={{ bg: "blue.600" }}
-        _active={{ bg: "gray.200" }}
-        >
-          Don't have an account? Sign Up
-        </Button>
-      </VStack>
-    </Container>
+        <form style={{ width: "100%" }}>
+          <div style={{ marginBottom: "20px" }}>
+            <label style={{
+              display: "block",
+              marginBottom: "8px",
+              color: textColor,
+              fontSize: "1rem",
+              fontWeight: "600"
+            }}>
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={loginInfo.email}
+              onChange={(e) => setloginInfo({ ...loginInfo, email: e.target.value })}
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: "10px",
+                border: `1px solid ${inputBorder}`,
+                fontSize: "1rem",
+                transition: "all 0.3s ease",
+                background: inputBg,
+                outline: "none",
+                color: textColor
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: "30px" }}>
+            <label style={{
+              display: "block",
+              marginBottom: "8px",
+              color: textColor,
+              fontSize: "1rem",
+              fontWeight: "600"
+            }}>
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={loginInfo.password}
+              onChange={(e) => setloginInfo({ ...loginInfo, password: e.target.value })}
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: "10px",
+                border: `1px solid ${inputBorder}`,
+                fontSize: "1rem",
+                transition: "all 0.3s ease",
+                background: inputBg,
+                outline: "none",
+                color: textColor
+              }}
+            />
+          </div>
+
+          <button
+            onClick={verifyUser}
+            style={{
+              width: "100%",
+              padding: "14px",
+              borderRadius: "10px",
+              background: "linear-gradient(45deg, #4299e1, #3182ce)",
+              color: "white",
+              fontSize: "1rem",
+              fontWeight: "600",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              marginBottom: "20px",
+              boxShadow: "0 4px 15px rgba(66, 153, 225, 0.3)"
+            }}
+            onMouseOver={(e) => {
+              e.target.style.transform = "translateY(-2px)";
+              e.target.style.boxShadow = "0 6px 20px rgba(66, 153, 225, 0.4)";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.transform = "translateY(0)";
+              e.target.style.boxShadow = "0 4px 15px rgba(66, 153, 225, 0.3)";
+            }}
+          >
+            Login
+          </button>
+
+          <button
+            onClick={() => navigate("/signup")}
+            style={{
+              width: "100%",
+              padding: "14px",
+              borderRadius: "10px",
+              background: "transparent",
+              color: textColor,
+              fontSize: "1rem",
+              fontWeight: "600",
+              border: `1px solid ${inputBorder}`,
+              cursor: "pointer",
+              transition: "all 0.3s ease"
+            }}
+            onMouseOver={(e) => {
+              e.target.style.background = inputBg;
+              e.target.style.transform = "translateY(-2px)";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.background = "transparent";
+              e.target.style.transform = "translateY(0)";
+            }}
+          >
+            Don't have an account? Sign Up
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 
-export default Login ;
+export default Login;

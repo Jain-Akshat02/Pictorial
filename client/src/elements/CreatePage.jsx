@@ -1,44 +1,137 @@
-import { Container, Heading, VStack,Box, Input, Button} from '@chakra-ui/react';
-import { useColorModeValue } from '../components/ui/color-mode';
-import React from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
-import { Toaster, toaster } from '../components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
+import { useColorModeValue } from '../components/ui/color-mode';
 
 const CreatePage = () => {
-  const [newPhoto , setNewPhoto] = React.useState({
+  const [newPhoto, setNewPhoto] = React.useState({
     title: "",
     description: "",
     image: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
+
+  // Get color mode values
+  const bgColor = useColorModeValue(
+    "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+    "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)"
+  );
+  const cardBg = useColorModeValue(
+    "rgba(255, 255, 255, 0.95)",
+    "rgba(26, 32, 44, 0.95)"
+  );
+  const textColor = useColorModeValue("#4a5568", "#a0aec0");
+  const inputBg = useColorModeValue(
+    "rgba(255, 255, 255, 0.8)",
+    "rgba(26, 32, 44, 0.8)"
+  );
+  const inputBorder = useColorModeValue(
+    "rgba(0, 0, 0, 0.1)",
+    "rgba(255, 255, 255, 0.1)"
+  );
+  const buttonBg = useColorModeValue(
+    "linear-gradient(45deg, #4299e1, #3182ce)",
+    "linear-gradient(45deg, #3182ce, #2b6cb0)"
+  );
 
   const jwtToken = localStorage.getItem("jwtToken");
   
   if(!jwtToken){
     return(
-      <Container maxW="lg" mx="auto" textAlign="center" py={8} borderWidth='1px' borderColor='peachpuff' borderRadius='lg' boxShadow='lg'>
-        <Toaster
-          toastOptions={{
-            duration: 5000,
-            style: {
-              background: "white",
-              color: "black",
-            },
-            isClosable: true,
-          }}
-        />
-        <Heading mb={6}>You need to be logged in to upload photos</Heading>
-        <Button colorScheme="blue" onClick={() => navigate("/signup")} mr={4}>
-          Sign Up
-        </Button>
-        <Button colorScheme="gray" onClick={() => navigate(-1)}>
-          No Thanks
-        </Button>
-      </Container>
+      <div style={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: bgColor,
+        padding: "20px"
+      }}>
+        <div style={{
+          width: "100%",
+          maxWidth: "500px",
+          background: cardBg,
+          borderRadius: "20px",
+          padding: "40px",
+          boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(10px)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          textAlign: "center"
+        }}>
+          <h1 style={{
+            fontSize: "2rem",
+            fontWeight: "700",
+            marginBottom: "20px",
+            color: textColor
+          }}>
+            You need to be logged in to upload photos
+          </h1>
+          <p style={{
+            fontSize: "1.1rem",
+            color: textColor,
+            marginBottom: "30px",
+            lineHeight: "1.6"
+          }}>
+            Join our community to share your beautiful moments with others.
+          </p>
+          <div style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "20px"
+          }}>
+            <button
+              onClick={() => navigate("/signup")}
+              style={{
+                padding: "12px 24px",
+                borderRadius: "10px",
+                background: buttonBg,
+                color: "white",
+                fontSize: "1rem",
+                fontWeight: "600",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                boxShadow: "0 4px 15px rgba(66, 153, 225, 0.3)"
+              }}
+              onMouseOver={(e) => {
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(66, 153, 225, 0.4)";
+              }}
+              onMouseOut={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 4px 15px rgba(66, 153, 225, 0.3)";
+              }}
+            >
+              Sign Up
+            </button>
+            <button
+              onClick={() => navigate(-1)}
+              style={{
+                padding: "12px 24px",
+                borderRadius: "10px",
+                background: "transparent",
+                color: textColor,
+                fontSize: "1rem",
+                fontWeight: "600",
+                border: `1px solid ${textColor}`,
+                cursor: "pointer",
+                transition: "all 0.3s ease"
+              }}
+              onMouseOver={(e) => {
+                e.target.style.background = cardBg;
+                e.target.style.transform = "translateY(-2px)";
+              }}
+              onMouseOut={(e) => {
+                e.target.style.background = "transparent";
+                e.target.style.transform = "translateY(0)";
+              }}
+            >
+              Go Back
+            </button>
+          </div>
+        </div>
+      </div>
     );
   }
   
@@ -46,100 +139,229 @@ const CreatePage = () => {
     setSelectedFile(event.target.files[0]);
   };
 
-
   const handleAddPhoto = async() => {
     if (!selectedFile) {
-      setUploadStatus("Please select a file to upload.");
-      toaster.create({
-        title: "Error",
-        description: "Please select a file to upload.",
-        status: "error",
-        key: "uploading",
-        isClosable: true,
-      });
+      alert("Please select a file to upload.");
       return;
     }
+
+    setIsUploading(true);
     const formData = new FormData();
     formData.append('image', selectedFile);
     formData.append("title", newPhoto.title);
     formData.append("description", newPhoto.description);
-    console.log(selectedFile.name, selectedFile.size, selectedFile.type);
 
-    toaster.create({
-      title: "Please wait",
-      description: "Please wait while we upload your file. This may take a few seconds.",
-      status: "info",
-      key: "uploading",
-    });
-    
-    // sending data to the server
     try {
       const response = await axios.post("http://localhost:5000/photos/upload-image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      setUploadStatus("File uploaded successfully!");
-      console.log("File uploaded successfully:\n", response.data);
-      toaster.create({
-        title: "Success",
-        description: "File uploaded successfully!",
-        status: "success",
-        key: "uploading",
-      });
+      
+      alert("Your photo has been uploaded successfully!");
+      
+      // Reset form
+      setNewPhoto({ title: "", description: "", image: "" });
+      setSelectedFile(null);
       
     } catch (error) {
-      console.error("Error uploading file:\n", error.response?.data || error.message);
-      setUploadStatus("Failed to upload file. Please try again.");
-      console.log(error.response?.data || error.message);
+      alert(error.response?.data?.message || "Failed to upload photo. Please try again.");
+    } finally {
+      setIsUploading(false);
     }
-  }
+  };
+
   return (
-    <Container maxW={'container.sm'}>
-      <Toaster toastOptions={{
-        duration: 5000,
-        style: {
-          background: "white",
-          color: "black",
-        },
-        isClosable: true,
-      }} />
-      <VStack spacing={8} >
-        <Heading>
-          Upload a new photo
-        </Heading>
+    <div style={{
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: bgColor,
+      padding: "20px"
+    }}>
+      <div style={{
+        width: "100%",
+        maxWidth: "600px",
+        background: cardBg,
+        borderRadius: "20px",
+        padding: "40px",
+        boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
+        backdropFilter: "blur(10px)",
+        border: "1px solid rgba(255, 255, 255, 0.2)"
+      }}>
+        <h1 style={{
+          textAlign: "center",
+          fontSize: "2rem",
+          fontWeight: "700",
+          marginBottom: "30px",
+          color: textColor
+        }}>
+          Share Your Moment
+        </h1>
 
-        <Box w={{ base: '90%', md: '80%', lg: '50%' }} bg={useColorModeValue("white","gray.800")}
-        p={6} rounded={'lg'} shadow={"md"}>
-          
-            <VStack spacing={4} maxW={'90%'} >
-                <Input
-                name='title'
-                placeholder='Give a name to your Picture'
-                value={newPhoto.title}
-                onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
-                />
-                <Input
-                name='description'
-                placeholder='A brief description (optional)'
-                value={newPhoto.description}
-                onChange={(e) => setNewPhoto({ ...newPhoto, description: e.target.value })}
-                />
-                <Input
-                name='file'
-                type='file'
-                accept='image/*'
-                // value={newPhoto.image} 
-                onChange={handleImageChange}
-                />
-                <Button type='submit' bg='blue.400' onClick={handleAddPhoto} >Upload Photo</Button>
-                
-                
-            </VStack>
-        </Box>
-      </VStack>
-    </Container>
-  )
-}
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px"
+        }}>
+          <div>
+            <input
+              name="title"
+              placeholder="Give your photo a title..."
+              value={newPhoto.title}
+              onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: "10px",
+                border: `1px solid ${inputBorder}`,
+                background: inputBg,
+                fontSize: "1rem",
+                color: textColor,
+                outline: "none",
+                transition: "all 0.3s ease"
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#4299e1";
+                e.target.style.boxShadow = "0 0 0 3px rgba(66, 153, 225, 0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = inputBorder;
+                e.target.style.boxShadow = "none";
+              }}
+            />
+          </div>
 
-export default CreatePage
+          <div>
+            <input
+              name="description"
+              placeholder="Tell us about your photo..."
+              value={newPhoto.description}
+              onChange={(e) => setNewPhoto({ ...newPhoto, description: e.target.value })}
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: "10px",
+                border: `1px solid ${inputBorder}`,
+                background: inputBg,
+                fontSize: "1rem",
+                color: textColor,
+                outline: "none",
+                transition: "all 0.3s ease"
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#4299e1";
+                e.target.style.boxShadow = "0 0 0 3px rgba(66, 153, 225, 0.2)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = inputBorder;
+                e.target.style.boxShadow = "none";
+              }}
+            />
+          </div>
+
+          <div
+            style={{
+              border: `2px dashed ${inputBorder}`,
+              borderRadius: "10px",
+              padding: "30px",
+              textAlign: "center",
+              cursor: "pointer",
+              background: inputBg,
+              transition: "all 0.3s ease"
+            }}
+            onClick={() => document.getElementById("file-upload").click()}
+            onDragOver={(e) => {
+              e.preventDefault();
+              e.currentTarget.style.borderColor = "#4299e1";
+              e.currentTarget.style.background = "rgba(66, 153, 225, 0.1)";
+            }}
+            onDragLeave={(e) => {
+              e.currentTarget.style.borderColor = inputBorder;
+              e.currentTarget.style.background = inputBg;
+            }}
+            onDrop={(e) => {
+              e.preventDefault();
+              const file = e.dataTransfer.files[0];
+              if (file) {
+                setSelectedFile(file);
+              }
+              e.currentTarget.style.borderColor = inputBorder;
+              e.currentTarget.style.background = inputBg;
+            }}
+          >
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
+            <p style={{
+              color: textColor,
+              fontSize: "1.1rem",
+              marginBottom: "10px",
+              fontWeight: "500"
+            }}>
+              Drag & drop your photo here
+            </p>
+            <p style={{
+              fontSize: "0.9rem",
+              color: textColor,
+              opacity: "0.8"
+            }}>
+              or click to browse
+            </p>
+            {selectedFile && (
+              <p style={{
+                fontSize: "0.9rem",
+                color: textColor,
+                marginTop: "10px",
+                fontWeight: "500"
+              }}>
+                {selectedFile.name}
+              </p>
+            )}
+          </div>
+
+          <button
+            onClick={handleAddPhoto}
+            disabled={isUploading}
+            style={{
+              padding: "14px 28px",
+              borderRadius: "10px",
+              background: buttonBg,
+              color: "white",
+              fontSize: "1rem",
+              fontWeight: "600",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              boxShadow: "0 4px 15px rgba(66, 153, 225, 0.3)",
+              opacity: isUploading ? "0.7" : "1",
+              maxWidth: "80%",
+              margin: "0 auto"
+            }}
+            onMouseOver={(e) => {
+              if (!isUploading) {
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(66, 153, 225, 0.4)";
+              }
+            }}
+            onMouseOut={(e) => {
+              if (!isUploading) {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 4px 15px rgba(66, 153, 225, 0.3)";
+              }
+            }}
+          >
+            {isUploading ? "Uploading..." : "Upload Photo"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreatePage;
