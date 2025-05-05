@@ -77,7 +77,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
           display: "flex",
           gap: "20px",
           alignItems: "center",
-          "@media (max-width: 768px)": {
+          "@media (maxWidth: 768px)": {
             display: "none"
           }
         }}>
@@ -201,7 +201,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
           onClick={toggleDrawer}
           style={{
             display: "none",
-            "@media (max-width: 768px)": {
+            "@media (maxWidth: 768px)": {
               display: "block"
             },
             padding: "8px",

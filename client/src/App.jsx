@@ -10,13 +10,13 @@ import Signup from './userAuthPages/Signup.jsx';
 import Profile from './elements/ProfileCard.jsx';
 import Logout from './userAuthPages/Logout.jsx';
 import ProfileCard from './elements/ProfileCard.jsx';
-// import {Drawer} from '../components/ui/drawer.jsx'
 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(()=>{
     const jwtToken = localStorage.getItem("jwtToken");
@@ -27,8 +27,13 @@ function App() {
     }
   }, []);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isLoggedIn);
+  }
+
   return (
     <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
+      
       <Navbar isLoggedIn={isLoggedIn} setShowProfile={setShowProfile}/>
       <Routes>
           <Route path="/" element={<Home/>} /> 

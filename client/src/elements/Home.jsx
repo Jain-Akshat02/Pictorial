@@ -33,8 +33,9 @@ const Home = () => {
       justifyContent: "center",
       background: bgColor,
       padding: "20px"
+
     }}>
-      {/* Hero Section */}
+
       <div style={{
         width: "100%",
         maxWidth: "800px",
@@ -51,9 +52,10 @@ const Home = () => {
           fontSize: "3rem",
           fontWeight: "700",
           marginBottom: "20px",
-          background: headingGradient,
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
+          color: textColor,
+          // background: headingGradient,
+          // WebkitBackgroundClip: "text",
+          // WebkitTextFillColor: "transparent"
         }}>
           Welcome to PiCTORIAL
         </h1>
@@ -171,9 +173,10 @@ const Home = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "15px",
-              background: headingGradient,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
+              color: textColor,
+              // background: headingGradient,
+              // WebkitBackgroundClip: "text",
+              // WebkitTextFillColor: "transparent"
             }}>
               {feature.title}
             </h2>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useColorModeValue } from '../components/ui/color-mode';
+import { toaster, Toaster } from '../components/ui/toaster.jsx';
 
 const CreatePage = () => {
   const [newPhoto, setNewPhoto] = React.useState({
@@ -141,7 +142,15 @@ const CreatePage = () => {
 
   const handleAddPhoto = async() => {
     if (!selectedFile) {
-      alert("Please select a file to upload.");
+      toaster.create({
+        title:"No file selected",
+        description:"Please select a file to upload.",
+        status:"error",
+        duration:5000,
+        isClosable:true,
+        position:"bottom-right",
+      });
+      
       return;
     }
 
@@ -158,14 +167,28 @@ const CreatePage = () => {
         },
       });
       
-      alert("Your photo has been uploaded successfully!");
+      toaster.create({
+        title: "Success",
+        description: "Your photo has been uploaded successfully!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+      });
       
       // Reset form
       setNewPhoto({ title: "", description: "", image: "" });
       setSelectedFile(null);
       
     } catch (error) {
-      alert(error.response?.data?.message || "Failed to upload photo. Please try again.");
+      toaster.create({
+        title: "Error",
+        description: error.response?.data?.message || "Failed to upload photo. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-right",
+      });
     } finally {
       setIsUploading(false);
     }
@@ -180,6 +203,7 @@ const CreatePage = () => {
       background: bgColor,
       padding: "20px"
     }}>
+      <Toaster />
       <div style={{
         width: "100%",
         maxWidth: "600px",
