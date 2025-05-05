@@ -16,8 +16,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  
   useEffect(()=>{
     const jwtToken = localStorage.getItem("jwtToken");
     const user = localStorage.getItem("userInfo");
@@ -26,10 +25,6 @@ function App() {
       setUserInfo(JSON.parse(user));
     }
   }, []);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isLoggedIn);
-  }
 
   return (
     <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
