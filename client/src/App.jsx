@@ -36,7 +36,6 @@ function App() {
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo}/>} />
           <Route path="/signup" element={<Signup/>} />
           <Route path="/profile" element={<Profile/>} />
-          <Route path="/logout" element={<Logout/>} />
       </Routes>
       {showProfile && (
         <ProfileCard

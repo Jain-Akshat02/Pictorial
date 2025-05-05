@@ -56,7 +56,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
     );
     document.documentElement.style.setProperty(
       "--button-border",
-      colorMode === "dark" ? "1px solid rgba(225, 130, 66, 0.2)" : "none"
+      colorMode === "dark" ? "1px solid rgba(4, 12, 20, 0.2)" : "none"
     );
     document.documentElement.style.setProperty(
       "--button-hover-bg",
@@ -76,15 +76,15 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
     );
     document.documentElement.style.setProperty(
       "--drawer-bg",
-      colorMode === "dark" ? "rgba(26, 32, 44, 0.95)" : "rgba(255, 255, 255, 0.95)"
+      colorMode === "dark" ? "rgba(26, 32, 44, 0.85)" : "rgba(255, 255, 255, 0.95)"
     );
     document.documentElement.style.setProperty(
       "--drawer-border",
-      colorMode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)"
+      colorMode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
     );
     document.documentElement.style.setProperty(
       "--drawer-header-border",
-      colorMode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)"
+      colorMode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
     );
   }, [colorMode]);
 

@@ -42,7 +42,13 @@ const Signup = () => {
     // console.log( userInfo.password)
 
     if (userInfo.username === "" || userInfo.email === "" || userInfo.password === "") {
-      toaster("Please fill all the fields", "error");
+      toaster.create({
+        title: "Error",
+        description: "Please enter all fields",
+        status: "error",
+        key: "uploading",
+        isClosable: true,
+      });
       return;
     } 
     if (userInfo.password.length < 6) {
@@ -268,6 +274,7 @@ const Signup = () => {
           </div>
 
           <button
+            
             onClick={signupInfo}
             style={{
               width: "100%",
@@ -296,6 +303,7 @@ const Signup = () => {
           </button>
 
           <button
+            type="button"
             onClick={() => navigate("/login")}
             style={{
               width: "100%",

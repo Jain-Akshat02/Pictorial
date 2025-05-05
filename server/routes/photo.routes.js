@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import {getPhotos, createPhotos, updatePhoto, deletePhoto} from '../components/photo.controller.js';
 import { upload } from "../middlewares/multer.middlewares.js";
 import { fileURLToPath } from "url";
@@ -28,23 +28,24 @@ import { verifyUser } from '../middlewares/verifyUser.middleware.js';
             // Get the local file path
         const localFilePath = path.join(req.file.destination, req.file.filename);
         // console.log(localFilePath);
-        
         // Upload the file to Cloudinary
         const cloudinaryResponse = await uploadOnCloudinary(localFilePath);
-
 
         // Check if the upload was successful
         if (!cloudinaryResponse) {
             console.log("Failed to upload file to Cloudinary");
             return res.status(500).json({ success: false, message: "Failed to upload file to Cloudinary" });
 
-        }
+        }   
+            
             res.status(200).json({
                 success: true,
                 message: "File uploaded successfully",
                 filePath: `/images/${req.file.filename}`, // Path to the uploaded file
+                response: cloudinaryResponse, // Cloudinary response
                 
             });
+            console.log("we are here");
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }

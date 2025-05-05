@@ -250,6 +250,7 @@ const Login = ({setIsLoggedIn, setUserInfo}) => {
           </button>
 
           <button
+            type="button"
             onClick={() => navigate("/signup")}
             style={{
               width: "100%",
