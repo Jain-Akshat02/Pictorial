@@ -56,7 +56,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
     );
     document.documentElement.style.setProperty(
       "--button-border",
-      colorMode === "dark" ? "1px solid rgba(66, 153, 225, 0.2)" : "none"
+      colorMode === "dark" ? "1px solid rgba(225, 130, 66, 0.2)" : "none"
     );
     document.documentElement.style.setProperty(
       "--button-hover-bg",
@@ -80,11 +80,11 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
     );
     document.documentElement.style.setProperty(
       "--drawer-border",
-      colorMode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
+      colorMode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)"
     );
     document.documentElement.style.setProperty(
       "--drawer-header-border",
-      colorMode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
+      colorMode === "dark" ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.1)"
     );
   }, [colorMode]);
 
@@ -164,6 +164,30 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
             </div>
 
             <div className={styles.drawerContent}>
+              <button
+                onClick={() => {
+                  navigate("/create");
+                  setIsDrawerOpen(false);
+                }}
+                className={styles.drawerButton}
+              >
+                <CiSquarePlus size={20} />
+                <b>Create Post</b>
+              </button>
+
+              <button
+                onClick={() => {
+                  toggleColorMode();
+                  setIsDrawerOpen(false);
+                }}
+                className={styles.drawerButton}
+              >
+                {colorMode === "dark" ? <IoSunnyOutline size={20} /> : <IoSunny size={20} />}
+                <b>
+                {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
+                </b>
+              </button>
+
               {isLoggedIn ? (
                 <button
                   onClick={() => {
@@ -175,31 +199,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
                   <CiUser size={20} />
                   Profile
                 </button>
-              ) : null}
-
-              <button
-                onClick={() => {
-                  navigate("/create");
-                  setIsDrawerOpen(false);
-                }}
-                className={styles.drawerButton}
-              >
-                <CiSquarePlus size={20} />
-                Create Post
-              </button>
-
-              <button
-                onClick={() => {
-                  toggleColorMode();
-                  setIsDrawerOpen(false);
-                }}
-                className={styles.drawerButton}
-              >
-                {colorMode === "dark" ? <IoSunnyOutline size={20} /> : <IoSunny size={20} />}
-                {colorMode === "dark" ? "Light Mode" : "Dark Mode"}
-              </button>
-
-              {!isLoggedIn ? (
+              ) : (
                 <button
                   onClick={() => {
                     navigate("/signup");
@@ -209,7 +209,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
                 >
                   Sign Up
                 </button>
-              ) : null}
+              )}
             </div>
           </div>
         </div>
