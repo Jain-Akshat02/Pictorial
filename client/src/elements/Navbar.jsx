@@ -105,7 +105,10 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
         {/* Desktop Menu */}
         <div className={styles.desktopMenu}>
           <button
-            onClick={() => navigate("/create")}
+            onClick={() => 
+              navigate("/create")
+              // console.log("Create Post")
+            }
             className={styles.navButton}
           >
             <CiSquarePlus size={20} />

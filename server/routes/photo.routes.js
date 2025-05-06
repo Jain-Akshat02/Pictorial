@@ -45,7 +45,6 @@ import { verifyUser } from '../middlewares/verifyUser.middleware.js';
                 response: cloudinaryResponse, // Cloudinary response
                 
             });
-            console.log("we are here");
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }
