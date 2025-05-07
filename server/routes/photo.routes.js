@@ -1,14 +1,16 @@
-import express, { response } from 'express';
+import express from 'express';
 import {getPhotos, createPhotos, updatePhoto, deletePhoto} from '../components/photo.controller.js';
 import { upload } from "../middlewares/multer.middlewares.js";
 import { fileURLToPath } from "url";
 import path from "path";
-const router = express.Router();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import Photo from '../models/Pictures.model.js';
 import { verifyUser } from '../middlewares/verifyUser.middleware.js';
+
+
+const router = express.Router();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
     express.json(),
@@ -20,8 +22,14 @@ import { verifyUser } from '../middlewares/verifyUser.middleware.js';
 
     //route to upload image
     // This route handles the image upload using multer middleware
-    router.post("/upload-image", upload.single("image"), async (req, res) => {
+    router.post("/upload-image", verifyUser, upload.single("image"), async (req, res) => {
         try {
+            console.log("User data in upload route:",{
+                userId: req.user.userId,
+                id: req.user._id,
+                user: req.user
+
+            })
             if (!req.file) {
                 return res.status(400).json({ success: false, message: "No file uploaded" });
             }
@@ -37,17 +45,9 @@ import { verifyUser } from '../middlewares/verifyUser.middleware.js';
             return res.status(500).json({ success: false, message: "Failed to upload file to Cloudinary" });
 
         }  
+        console.log("route 1 code responsed");
         await createPhotos(req, res, cloudinaryResponse); 
-        //  console.log("----hello hello----",cloudinaryResponse.public_id,"\n",cloudinaryResponse.secure_url,"\n",cloudinaryResponse.width,"\n",cloudinaryResponse.height,"\n",cloudinaryResponse.api_key);
-
-        // console.log("userinfo", req.body.title)
-            // res.status(200).json({
-            //     success: true,
-            //     message: "File uploaded successfully",
-            //     filePath: `/images/${req.file.filename}`, // Path to the uploaded file
-            //     response: cloudinaryResponse, // Cloudinary response
-                
-            // });
+        console.log("--route 2 code responsed--");
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }

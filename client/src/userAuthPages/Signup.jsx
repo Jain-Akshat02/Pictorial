@@ -114,8 +114,9 @@ const Signup = () => {
             status: "error",
             isClosable: true,
             duration: 3000,
-          });
-        } else if (errorMessage === "User already exists") {
+          })
+        } 
+        else if (errorMessage === "User already exists") {
           toaster.create({
             title: "Email Already Registered",
             description: "This email is already registered. Please log in instead.",

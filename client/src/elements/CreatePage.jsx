@@ -161,9 +161,23 @@ const CreatePage = () => {
     formData.append("description", newPhoto.description);           
 
     try {
+      const jwtToken = localStorage.getItem("jwtToken");
+      if (!jwtToken) {
+        toaster.create({
+          title: "Error",
+          description: "You need to be logged in to upload photos",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+        return;
+      }
+
       const response = await axios.post("http://localhost:5000/photos/upload-image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "Authorization": `Bearer ${jwtToken}`
         },
       });
       
@@ -181,6 +195,7 @@ const CreatePage = () => {
       setSelectedFile(null);
       
     } catch (error) {
+      console.error("Upload error:", error);
       toaster.create({
         title: "Error",
         description: error.response?.data?.message || "Failed to upload photo. Please try again.",

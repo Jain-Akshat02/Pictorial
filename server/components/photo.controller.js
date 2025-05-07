@@ -17,6 +17,10 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
     if(!title){
      return res.status(400).json({success:false, message: "Provide All fields"})
     }
+
+    
+    console.log("---Creating new photo with user:---", req.user._id);
+
     const newPhoto = new Photo({
         name: title,
         image: image,
@@ -24,25 +28,37 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
         cloudinaryPublicId: cloudinaryInfo.public_id,
         cloudinaryUrl: cloudinaryInfo.secure_url,
         width: cloudinaryInfo.width,
-        height: cloudinaryInfo.height
+        height: cloudinaryInfo.height,
+        userId: req.user._id,
+        user: req.user._id
     })
     console.log("--------puclicId by akshu-------",cloudinaryInfo.public_id);
  
     
     try {
-        await newPhoto.save();
-        console.log("Photo saved successfully:", newPhoto);
+        const savedPhoto = await newPhoto.save();
+        console.log("Photo saved successfully:", savedPhoto);
+        
+        return res.status(200).json({
+            success: true,
+            message: "Photo uploaded successfully",
+            data: savedPhoto
+        });
     } catch (saveError) {
         console.error("Error saving photo:", saveError);
-        return res.status(500).json({ success: false, message: "Error saving photo to database", error: saveError.message, stack: saveError.stack });
+        return res.status(500).json({
+            success: false,
+            message: "Error saving photo to database",
+            error: saveError.message
+        });
     }
-    
-        console.log("--------puclicId-------",newPhoto);
-
-     res.status(200).json({success: true, message: "Photo uploaded successfully by akshat", data: newPhoto});
      
     } catch (error) {
-     res.status(500).json({success: false, message: "Error uploading photo", error});
+        return res.status(500).json({
+        success: false,
+        message: "Error uploading photo",
+        error: error.message
+    });
     }
  }
 
