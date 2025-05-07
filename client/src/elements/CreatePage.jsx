@@ -158,7 +158,7 @@ const CreatePage = () => {
     const formData = new FormData();
     formData.append('image', selectedFile);
     formData.append("title", newPhoto.title);
-    formData.append("description", newPhoto.description);
+    formData.append("description", newPhoto.description);           
 
     try {
       const response = await axios.post("http://localhost:5000/photos/upload-image", formData, {

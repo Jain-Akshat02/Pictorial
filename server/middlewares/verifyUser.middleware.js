@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import  User  from '../models/User.models.js';
 
-export const verifyUser = async (requestAnimationFrame, res, next) =>{
+export const verifyUser = async (req, res, next) =>{
     const authHeader = req.headers.authorization;
     if (!authHeader) {
         return res.status(401).json({ message: 'Authorization header is missing' });
@@ -16,6 +16,7 @@ export const verifyUser = async (requestAnimationFrame, res, next) =>{
             return res.status(401).json({ message: 'User not found' });
         }
         req.user = user; // Attach the user to the request object
+        next();
     } catch (error) {
         return res.status(401).json({success: false},{ message: 'Invalid token' });
         

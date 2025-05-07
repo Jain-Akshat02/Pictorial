@@ -27,7 +27,7 @@ import { verifyUser } from '../middlewares/verifyUser.middleware.js';
             }
             // Get the local file path
         const localFilePath = path.join(req.file.destination, req.file.filename);
-        // console.log(localFilePath);
+        console.log(localFilePath);
         // Upload the file to Cloudinary
         const cloudinaryResponse = await uploadOnCloudinary(localFilePath);
 
@@ -36,15 +36,18 @@ import { verifyUser } from '../middlewares/verifyUser.middleware.js';
             console.log("Failed to upload file to Cloudinary");
             return res.status(500).json({ success: false, message: "Failed to upload file to Cloudinary" });
 
-        }   
-            
-            res.status(200).json({
-                success: true,
-                message: "File uploaded successfully",
-                filePath: `/images/${req.file.filename}`, // Path to the uploaded file
-                response: cloudinaryResponse, // Cloudinary response
+        }  
+        await createPhotos(req, res, cloudinaryResponse); 
+        //  console.log("----hello hello----",cloudinaryResponse.public_id,"\n",cloudinaryResponse.secure_url,"\n",cloudinaryResponse.width,"\n",cloudinaryResponse.height,"\n",cloudinaryResponse.api_key);
+
+        // console.log("userinfo", req.body.title)
+            // res.status(200).json({
+            //     success: true,
+            //     message: "File uploaded successfully",
+            //     filePath: `/images/${req.file.filename}`, // Path to the uploaded file
+            //     response: cloudinaryResponse, // Cloudinary response
                 
-            });
+            // });
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }

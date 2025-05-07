@@ -1,6 +1,6 @@
 import Photo from "../models/Pictures.model.js";
 import mongoose from "mongoose";
-
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 export const getPhotos = async (req,res)=>{
     try {
         const photos = await Photo.find({});
@@ -10,16 +10,36 @@ export const getPhotos = async (req,res)=>{
     }
 }
 
-export const createPhotos = async (req,res)=>{
-    const photo = req.body;
-    if(!photo.name || !photo.image){
+export const createPhotos = async (req,res,cloudinaryResponse)=>{
+    try {
+        const {title, description, image} = req.body;
+        const cloudinaryInfo = cloudinaryResponse;
+    if(!title){
      return res.status(400).json({success:false, message: "Provide All fields"})
     }
-    const newPhoto = new Photo(photo)
+    const newPhoto = new Photo({
+        name: title,
+        image: image,
+        description: description,
+        cloudinaryPublicId: cloudinaryInfo.public_id,
+        cloudinaryUrl: cloudinaryInfo.secure_url,
+        width: cloudinaryInfo.width,
+        height: cloudinaryInfo.height
+    })
+    console.log("--------puclicId by akshu-------",cloudinaryInfo.public_id);
  
+    
     try {
-     await newPhoto.save();
-     res.status(200).json({success: true, message: "Photo uploaded successfully", data: newPhoto});
+        await newPhoto.save();
+        console.log("Photo saved successfully:", newPhoto);
+    } catch (saveError) {
+        console.error("Error saving photo:", saveError);
+        return res.status(500).json({ success: false, message: "Error saving photo to database", error: saveError.message, stack: saveError.stack });
+    }
+    
+        console.log("--------puclicId-------",newPhoto);
+
+     res.status(200).json({success: true, message: "Photo uploaded successfully by akshat", data: newPhoto});
      
     } catch (error) {
      res.status(500).json({success: false, message: "Error uploading photo", error});

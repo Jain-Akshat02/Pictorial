@@ -6,10 +6,6 @@ const photoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true
-    },
     description: {
         type: String,
         required: false, 
@@ -18,11 +14,27 @@ const photoSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+
+    cloudinaryPublicId: {
+        type: String,
         required: true
-    }
+    },
+    cloudinaryUrl: {
+        type: String,
+        required: true
+    },
+    width: {
+        type: Number,
+        required: true
+    },
+    height: {
+        type: Number,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
 },{
     timestamps: true
 });
