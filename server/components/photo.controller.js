@@ -1,12 +1,30 @@
 import Photo from "../models/Pictures.model.js";
 import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+
+
 export const getPhotos = async (req,res)=>{
     try {
-        const photos = await Photo.find({});
+        const photos = await Photo.find({})
+            .sort({createdAt: -1})
+            .populate('user', 'username')
         res.status(200).json({success: true, message: "Photos fetched successfully", data: photos});
     } catch (error) {
         res.status(500).json({success: false, message: "Error fetching photos", error});
+    }
+}
+export const getUserPhotos = async (res,req) => {
+    try {
+        console.log("Fetching photos for id:", req.user._id);
+        const photos = await Photo.find({user: req.user._id})
+                .sort({createdAt: -1})
+                .populate('user', 'username')
+            res.status(200).json({
+                success: true,
+                message:"Photos fetched Successfully"
+            })
+    } catch (error) {
+        res.status(500).json({success: false, message: "Error fetching user photos"})
     }
 }
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import {getPhotos, createPhotos, updatePhoto, deletePhoto} from '../components/photo.controller.js';
+import {getPhotos, createPhotos, updatePhoto, deletePhoto,getUserPhotos} from '../components/photo.controller.js';
 import { upload } from "../middlewares/multer.middlewares.js";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -14,11 +14,15 @@ const __dirname = path.dirname(__filename);
 
 
     express.json(),
+    //get all photos
     router.get("/", getPhotos),
-    router.put('/:id', updatePhoto )
+
+    //protected routes
+    router.put('/:id',verifyUser, updatePhoto )
+    router.delete("/:id", verifyUser ,deletePhoto)
+    router.get("/my-photos", getUserPhotos)
+    //create photos
     router.post("/", createPhotos)
-    router.delete("/:id", deletePhoto)
-    
 
     //route to upload image
     // This route handles the image upload using multer middleware

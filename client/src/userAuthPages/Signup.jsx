@@ -179,9 +179,7 @@ const Signup = () => {
           fontSize: "2.5rem",
           fontWeight: "700",
           marginBottom: "30px",
-          background: headingGradient,
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
+          color: textColor,
         }}>
           Create Account
         </h1>

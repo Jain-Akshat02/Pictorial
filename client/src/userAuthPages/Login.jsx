@@ -155,9 +155,7 @@ const Login = ({setIsLoggedIn, setUserInfo}) => {
           fontSize: "2.5rem",
           fontWeight: "700",
           marginBottom: "30px",
-          background: headingGradient,
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent"
+          color: textColor,
         }}>
           Welcome Back
         </h1>
