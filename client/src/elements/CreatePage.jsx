@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useColorModeValue } from '../components/ui/color-mode';
 import { toaster, Toaster } from '../components/ui/toaster.jsx';
+import UserImage from '../PhotoStore/userImage.jsx';
 
 const CreatePage = () => {
   const [newPhoto, setNewPhoto] = React.useState({
@@ -210,6 +211,7 @@ const CreatePage = () => {
   };
 
   return (
+    <>
     <div style={{
       minHeight: "100vh",
       display: "flex",
@@ -399,7 +401,12 @@ const CreatePage = () => {
           </button>
         </div>
       </div>
+      
     </div>
+    <UserImage />
+    </>
+
+  
   );
 };
 

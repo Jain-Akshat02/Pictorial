@@ -1,10 +1,9 @@
 import express from 'express';
-import {getPhotos, createPhotos, updatePhoto, deletePhoto,getUserPhotos} from '../components/photo.controller.js';
+import {getPhotos,createPhotos,updatePhoto,deletePhoto,getUserPhotos} from '../components/photo.controller.js';
 import { upload } from "../middlewares/multer.middlewares.js";
 import { fileURLToPath } from "url";
 import path from "path";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
-import Photo from '../models/Pictures.model.js';
 import { verifyUser } from '../middlewares/verifyUser.middleware.js';
 
 
@@ -13,14 +12,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-    express.json(),
     //get all photos
     router.get("/", getPhotos),
 
     //protected routes
     router.put('/:id',verifyUser, updatePhoto )
     router.delete("/:id", verifyUser ,deletePhoto)
-    router.get("/my-photos", getUserPhotos)
+    router.get("/my-photos", verifyUser, getUserPhotos)
+    
     //create photos
     router.post("/", createPhotos)
 

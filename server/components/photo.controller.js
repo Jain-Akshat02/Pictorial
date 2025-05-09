@@ -13,17 +13,22 @@ export const getPhotos = async (req,res)=>{
         res.status(500).json({success: false, message: "Error fetching photos", error});
     }
 }
-export const getUserPhotos = async (res,req) => {
+export const getUserPhotos = async (req, res) => {
     try {
-        console.log("Fetching photos for id:", req.user._id);
+        console.log("Fetching photos for user ID:", req.user._id);
         const photos = await Photo.find({user: req.user._id})
                 .sort({createdAt: -1})
-                .populate('user', 'username')
-            res.status(200).json({
-                success: true,
-                message:"Photos fetched Successfully"
-            })
+                .populate('user', 'username');
+        
+        console.log("Found photos:", photos); // Debug log
+        
+        res.status(200).json({
+            success: true,
+            message: "Photos fetched Successfully",
+            data: photos
+        });
     } catch (error) {
+        console.error("Error in getUserPhotos:", error); // Debug log
         res.status(500).json({success: false, message: "Error fetching user photos"})
     }
 }
