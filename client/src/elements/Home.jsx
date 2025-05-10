@@ -14,7 +14,7 @@ const Home = () => {
         <LandingPage /> // Render desktop version otherwise
       )}
 
-      <AllImages /> // Render all images component
+      <AllImages /> 
     </>
     
   )

@@ -15,14 +15,11 @@ export const getPhotos = async (req,res)=>{
 }
 export const getUserPhotos = async (req, res) => {
     try {
-        console.log("Fetching photos for user ID:", req.user._id);
         const photos = await Photo.find({user: req.user._id})
                 .sort({createdAt: -1})
                 .populate('user', 'username');
         
-        console.log("Found photos:", photos); // Debug log
-        
-        res.status(200).json({
+       res.status(200).json({
             success: true,
             message: "Photos fetched Successfully",
             data: photos
@@ -40,10 +37,6 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
     if(!title){
      return res.status(400).json({success:false, message: "Provide All fields"})
     }
-
-    
-    console.log("---Creating new photo with user:---", req.user._id);
-
     const newPhoto = new Photo({
         name: title,
         image: image,
@@ -55,12 +48,12 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
         userId: req.user._id,
         user: req.user._id
     })
-    console.log("--------puclicId by akshu-------",cloudinaryInfo.public_id);
+    // console.log("--------puclicId by akshu-------",cloudinaryInfo.public_id);
  
     
     try {
         const savedPhoto = await newPhoto.save();
-        console.log("Photo saved successfully:", savedPhoto);
+        // console.log("Photo saved successfully:", savedPhoto);
         
         return res.status(200).json({
             success: true,
@@ -101,7 +94,7 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
 
  export const deletePhoto = async (req,res) => {
     const {id} = req.params;
-    const photo = req.body;
+    // const photo = req.body;
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(400).json({success:false, message: "Invalid ID"})
