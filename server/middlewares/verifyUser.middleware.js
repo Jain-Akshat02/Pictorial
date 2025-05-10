@@ -8,13 +8,13 @@ export const verifyUser = async (req, res, next) =>{
     }
 
     const token = authHeader.split(" ")[1];
-    console.log("Received token:", token); // Debug log
+    // console.log("Received token:", token); // Debug log
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        console.log("Decoded token:", decoded); // Debug log
+        // console.log("Decoded token:", decoded); // Debug log
         const user = await User.findById(decoded.id || decoded._id);
-        console.log("Found user:", user); // Debug log
+        // console.log("Found user:", user); // Debug log
         if (!user) {
             return res.status(401).json({ success: false, message: 'User not found' });
         }
@@ -23,7 +23,7 @@ export const verifyUser = async (req, res, next) =>{
             userId: user._id.toString(),
             ...user.toObject()
         }; // Attach the user to the request object
-        console.log("Attached user to request:", req.user); // Debug log
+        // console.log("Attached user to request:", req.user); // Debug log
         next();
     } catch (error) {
         console.error("Auth error:", error); // Debug log

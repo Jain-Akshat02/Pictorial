@@ -20,7 +20,7 @@ const Navbar = ({ isLoggedIn, setShowProfile }) => {
     "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)"
   );
 
-  // Set CSS variables based on color mode
+
   React.useEffect(() => {
     document.documentElement.style.setProperty(
       "--box-shadow",
