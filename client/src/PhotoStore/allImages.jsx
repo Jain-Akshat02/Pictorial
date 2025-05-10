@@ -6,6 +6,10 @@ const AllImages = () =>{
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(true);   
     const [error, setError] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+
+    const mobileBreakpoint = 768;
 
     // Get color mode values
     const bgColor = useColorModeValue(
@@ -21,6 +25,22 @@ const AllImages = () =>{
         "rgba(0, 0, 0, 0.1)",
         "rgba(255, 255, 255, 0.1)"
     );
+
+    useEffect(() =>{
+        const checkScreenSize = () => {
+            setIsMobile(window.innerWidth < mobileBreakpoint);
+        };
+
+        // Check size on initial render
+        checkScreenSize();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', checkScreenSize);
+
+        // Cleanup function to remove the event listener
+        return () => window.removeEventListener('resize', checkScreenSize);
+
+    }, [mobileBreakpoint]); //it will run if the mobileBreakpoint changes(not in this case)
 
     useEffect(() =>{
         // const jwtToken = localStorage.getItem("jwtToken");
@@ -105,9 +125,9 @@ const AllImages = () =>{
                 </h2>
                 <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                    gap: "30px",
-                    padding: "20px"
+                    gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(auto-fill, minmax(300px, 1fr))",
+                    gap: isMobile ? "10px" : "30px",
+                    padding: isMobile ? "0 10px" : "20px"
                 }}>
                     {images.map((image) => (
                         <div
