@@ -40,7 +40,6 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
     const newPhoto = new Photo({
         name: title,
         image: image,
-        description: description,
         cloudinaryPublicId: cloudinaryInfo.public_id,
         cloudinaryUrl: cloudinaryInfo.secure_url,
         width: cloudinaryInfo.width,

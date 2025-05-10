@@ -5,11 +5,6 @@ const photoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    description: {
-        type: String,
-        required: false, 
-    },
-
     cloudinaryPublicId: {
         type: String,
         required: true

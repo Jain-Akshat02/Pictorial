@@ -192,7 +192,7 @@ const CreatePage = () => {
       });
       
       // Reset form
-      setNewPhoto({ title: "", description: "", image: "" });
+      setNewPhoto({ title: "", image: "" });
       setSelectedFile(null);
       
     } catch (error) {
@@ -252,34 +252,6 @@ const CreatePage = () => {
               placeholder="Give your photo a title..."
               value={newPhoto.title}
               onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}
-              style={{
-                width: "100%",
-                padding: "12px 16px",
-                borderRadius: "10px",
-                border: `1px solid ${inputBorder}`,
-                background: inputBg,
-                fontSize: "1rem",
-                color: textColor,
-                outline: "none",
-                transition: "all 0.3s ease"
-              }}
-              onFocus={(e) => {
-                e.target.style.borderColor = "#4299e1";
-                e.target.style.boxShadow = "0 0 0 3px rgba(66, 153, 225, 0.2)";
-              }}
-              onBlur={(e) => {
-                e.target.style.borderColor = inputBorder;
-                e.target.style.boxShadow = "none";
-              }}
-            />
-          </div>
-
-          <div>
-            <input
-              name="description"
-              placeholder="Tell us about your photo..."
-              value={newPhoto.description}
-              onChange={(e) => setNewPhoto({ ...newPhoto, description: e.target.value })}
               style={{
                 width: "100%",
                 padding: "12px 16px",
