@@ -167,7 +167,7 @@ const ProfileCard = ({ userInfo, onClose }) => {
               }}
             >
               <span style={{ fontSize: "1.2rem" }}>👤</span>
-              View Profile
+              Change Username
             </button>
 
             <button
@@ -195,7 +195,7 @@ const ProfileCard = ({ userInfo, onClose }) => {
               }}
             >
               <span style={{ fontSize: "1.2rem" }}>✉️</span>
-              Edit Email
+              Reach out to Akshat Jain
             </button>
 
             <div style={{

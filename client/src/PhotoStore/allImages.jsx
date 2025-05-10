@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { useColorModeValue } from '../components/ui/color-mode';
+import { LuDownload } from 'react-icons/lu';
 
 const AllImages = () =>{
     const [images, setImages] = useState([]);
@@ -57,6 +58,32 @@ const AllImages = () =>{
         };
         fetchImages();
     },[]);
+
+    const handleDownload = async (imageUrl, imageName) => {
+        try {
+            // Fetch the image as a blob
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            
+            // Create a blob URL
+            const blobUrl = window.URL.createObjectURL(blob);
+            
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = `${imageName || 'image'}.jpg`;
+            
+            // Append to body, click, and remove
+            document.body.appendChild(link);
+            link.click();
+            
+            // Clean up
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
+    };
 
     if (loading) {
         return (
@@ -172,14 +199,54 @@ const AllImages = () =>{
                             <div style={{
                                 padding: "20px"
                             }}>
-                                <h3 style={{
-                                    fontSize: "1.25rem",
-                                    fontWeight: "600",
-                                    marginBottom: "10px",
-                                    color: textColor
+                                <div style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    marginBottom: "10px"
                                 }}>
-                                    {image.name}
-                                </h3>
+                                    <h3 style={{
+                                        fontSize: "1.25rem",
+                                        fontWeight: "600",
+                                        color: textColor
+                                    }}>
+                                        {image.name}
+                                    </h3>
+                                    <span style={{
+                                        fontSize: "0.9rem",
+                                        color: textColor,
+                                        opacity: 0.8,
+                                        fontStyle: "italic"
+                                    }}>
+                                        By {image.user?.username || "Anonymous"}
+                                    </span>
+                                </div>
+                                <div style={{
+                                    display: "flex",
+                                    justifyContent: "flex-end",
+                                    marginBottom: "10px"
+                                }}>
+                                    <button
+                                        onClick={() => handleDownload(image.cloudinaryUrl, image.name)}
+                                        style={{
+                                            background: "none",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            color: textColor,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: "5px",
+                                            fontSize: "0.9rem",
+                                            opacity: 0.8,
+                                            transition: "opacity 0.2s ease"
+                                        }}
+                                        onMouseOver={(e) => e.target.style.opacity = "1"}
+                                        onMouseOut={(e) => e.target.style.opacity = "0.8"}
+                                    >
+                                        <LuDownload size={16} />
+                                        
+                                    </button>
+                                </div>
                                 <p style={{
                                     fontSize: "1rem",
                                     color: textColor,
