@@ -1,12 +1,11 @@
 import React from 'react'
-
 import { useNavigate } from 'react-router-dom'
 import { useColorModeValue } from '../components/ui/color-mode'
-
-
-
 const NeedSignin = () => {
-
+    const buttonBg = useColorModeValue(
+        "linear-gradient(45deg, #4299e1, #3182ce)",
+        "linear-gradient(45deg, #3182ce, #2b6cb0)"
+      );
     const bgColor = useColorModeValue(
         "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
         "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)"
@@ -16,10 +15,6 @@ const NeedSignin = () => {
         "rgba(26, 32, 44, 0.95)"
       );
       const textColor = useColorModeValue("#4a5568", "#a0aec0");
-      const inputBg = useColorModeValue(
-        "rgba(255, 255, 255, 0.8)",
-        "rgba(26, 32, 44, 0.8)"
-      );
       const navigate = useNavigate();
   return (
     <div style={{

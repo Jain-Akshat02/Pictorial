@@ -49,7 +49,6 @@ const CreatePage = () => {
         background: bgColor,
         padding: "20px"
       }}>
-        //here we are using the needSignin component
         <NeedSignin />
       </div>
     );
