@@ -1,6 +1,7 @@
 import Photo from "../models/Pictures.model.js";
 import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import User from "../models/User.models.js";
 
 
 export const getPhotos = async (req,res)=>{
@@ -37,6 +38,13 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
     if(!title){
      return res.status(400).json({success:false, message: "Provide All fields"})
     }
+
+    // Get user details to create readable userId
+    const user = await User.findById(req.user._id);
+    if (!user) {
+        return res.status(404).json({success: false, message: "User not found"});
+    }
+
     const newPhoto = new Photo({
         name: title,
         image: image,
@@ -44,8 +52,8 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
         cloudinaryUrl: cloudinaryInfo.secure_url,
         width: cloudinaryInfo.width,
         height: cloudinaryInfo.height,
-        userId: req.user._id,
-        user: req.user._id
+        user: req.user._id,
+        userId: `${user.username}_${Date.now().toString().slice(-6)}`
     })
     // console.log("--------puclicId by akshu-------",cloudinaryInfo.public_id);
  
@@ -77,23 +85,11 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
     }
  }
 
- export const updatePhoto = async (req,res)=>{
-    const {id} = req.params;
-    const photo = req.body;
-    if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(400).json({success:false, message: "Invalid ID"})
-    }
-    try {
-        const updatedPhoto = await Photo.findByIdAndUpdate(id, photo, {new: true}); 
-        res.status(200).json({success: true, message: "Photo updated successfully", data: updatedPhoto});
-    } catch (error) {
-        res.status(500).json({success: false, message: "Error updating photo", error});
-    }
- }
-
  export const deletePhoto = async (req,res) => {
     const {id} = req.params;
     // const photo = req.body;
+    const userId = req.user._id;
+    console.log("userId in deletePhoto",userId);
 
     if(!mongoose.Types.ObjectId.isValid(id)){
         return res.status(400).json({success:false, message: "Invalid ID"})

@@ -1,5 +1,5 @@
 import express from 'express';
-import {getPhotos,createPhotos,updatePhoto,deletePhoto,getUserPhotos} from '../components/photo.controller.js';
+import {getPhotos,createPhotos,deletePhoto,getUserPhotos} from '../components/photo.controller.js';
 import { upload } from "../middlewares/multer.middlewares.js";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename);
     router.get("/", getPhotos),
 
     //protected routes
-    router.put('/:id',verifyUser, updatePhoto )
+    // router.put('/:id',verifyUser, updatePhoto )
     router.delete("/:id", verifyUser ,deletePhoto)
     router.get("/my-photos", verifyUser, getUserPhotos)
     
