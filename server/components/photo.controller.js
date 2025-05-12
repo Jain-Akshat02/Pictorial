@@ -33,7 +33,7 @@ export const getUserPhotos = async (req, res) => {
 
 export const createPhotos = async (req,res,cloudinaryResponse)=>{
     try {
-        const {title, description, image} = req.body;
+        const {title, image} = req.body;
         const cloudinaryInfo = cloudinaryResponse;
     if(!title){
      return res.status(400).json({success:false, message: "Provide All fields"})
@@ -54,8 +54,7 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
         height: cloudinaryInfo.height,
         user: req.user._id,
         userId: `${user.username}_${Date.now().toString().slice(-6)}`
-    })
-    // console.log("--------puclicId by akshu-------",cloudinaryInfo.public_id);
+    });
  
     
     try {

@@ -2,16 +2,17 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useColorModeValue } from "../components/ui/color-mode.jsx";
-
+import reachOut from "../elements/reachOut.jsx";
 const ProfileCard = ({ userInfo, onClose }) => {
   const [showConfirmation, setShowConfirmation] = React.useState(false);
   const navigate = useNavigate();
+  const [reachOut, setReachOut] = React.useState(false);
 
   // Get color mode values
-  const bgColor = useColorModeValue(
-    "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
-    "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)"
-  );
+  // const bgColor = useColorModeValue(
+  //   "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+  //   "linear-gradient(135deg, #1a202c 0%, #2d3748 100%)"
+  // );
   const cardBg = useColorModeValue(
     "rgba(255, 255, 255, 0.95)",
     "rgba(26, 32, 44, 0.95)"
@@ -185,6 +186,7 @@ const ProfileCard = ({ userInfo, onClose }) => {
                 gap: "10px",
                 transition: "all 0.3s ease"
               }}
+              onClick={() => setReachOut(true)}
               onMouseOver={(e) => {
                 e.target.style.background = hoverBg;
                 e.target.style.transform = "translateX(5px)";

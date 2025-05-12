@@ -27,30 +27,20 @@ const __dirname = path.dirname(__filename);
     // This route handles the image upload using multer middleware
     router.post("/upload-image", verifyUser, upload.single("image"), async (req, res) => {
         try {
-            // console.log("User data in upload route:",{
-            //     userId: req.user.userId,
-            //     id: req.user._id,
-            //     user: req.user
-
-            // })
             if (!req.file) {
                 return res.status(400).json({ success: false, message: "No file uploaded" });
             }
             // Get the local file path
         const localFilePath = path.join(req.file.destination, req.file.filename);
-        // console.log(localFilePath);
-        // Upload the file to Cloudinary
         const cloudinaryResponse = await uploadOnCloudinary(localFilePath);
 
-        // Check if the upload was successful
+        // Checking if the upload was successful
         if (!cloudinaryResponse) {
             console.log("Failed to upload file to Cloudinary");
             return res.status(500).json({ success: false, message: "Failed to upload file to Cloudinary" });
-
         }  
         // console.log("route 1 code responsed");
         await createPhotos(req, res, cloudinaryResponse); 
-        // console.log("--route 2 code responsed--");
         } catch (error) {
             res.status(500).json({ success: false, message: error.message });
         }
