@@ -7,15 +7,15 @@ import CreatePage from './elements/CreatePage.jsx';
 import { useColorModeValue } from './components/ui/color-mode.jsx';
 import Login from "./userAuthPages/Login.jsx"
 import Signup from './userAuthPages/Signup.jsx';
-import Profile from './elements/ProfileCard.jsx';
 import ProfileCard from './elements/ProfileCard.jsx';
-
+import ReachOut from './elements/ReachOut.jsx';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
-  
+   const [reachOut, setReachOut] = React.useState(false);
+
   useEffect(()=>{
     const jwtToken = localStorage.getItem("jwtToken");
     const user = localStorage.getItem("userInfo");
@@ -34,14 +34,22 @@ function App() {
           <Route path="/create" element={<CreatePage/>} /> 
           <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserInfo={setUserInfo}/>} />
           <Route path="/signup" element={<Signup/>} />
-          <Route path="/profile" element={<Profile/>} />
       </Routes>
       {showProfile && (
         <ProfileCard
           userInfo={userInfo}
           onClose={() => setShowProfile(false)}
+          setReachOut={setReachOut}
         />
       )}
+      {
+        reachOut && (
+          <ReachOut
+            // userInfo={userInfo}
+            // onClose={() => setReachOut(false)}
+          />
+        )
+      }
     </Box>
   )
 

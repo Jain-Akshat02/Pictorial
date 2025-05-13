@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useColorModeValue } from "../components/ui/color-mode.jsx";
 
-const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
+const ReachOut = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
   const [showConfirmation, setShowConfirmation] = React.useState(false);
   const navigate = useNavigate();
 
@@ -322,4 +322,4 @@ const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
   );
 };
 
-export default ProfileCard;
+export default ReachOut;
