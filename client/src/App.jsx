@@ -45,7 +45,6 @@ function App() {
       {
         reachOut && (
           <ReachOut
-            // userInfo={userInfo}
             onClose={() => setReachOut(false)}
           />
         )

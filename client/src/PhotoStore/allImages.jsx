@@ -203,9 +203,8 @@ const AllImages = () => {
             color: textColor,
             textAlign: "center",
             letterSpacing: "-0.02em",
-            background: `linear-gradient(135deg, ${textColor} 0%, ${accentColor} 100%)`,
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: textColor,
+            textShadow: `0 0 10px #dde2e8, 0 0 20px ${accentColor}`,
           }}
         >
           The world is now PiCTORIZING

@@ -166,9 +166,7 @@ const LandingPage = () => {
                 fontWeight: "600",
                 marginBottom: "15px",
                 color: textColor,
-                // background: headingGradient,
-                // WebkitBackgroundClip: "text",
-                // WebkitTextFillColor: "transparent"
+                
               }}>
                 {feature.title}
               </h2>
