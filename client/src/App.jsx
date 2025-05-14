@@ -14,7 +14,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
-   const [reachOut, setReachOut] = React.useState(false);
+   const [reachOut, setReachOut] = useState(false);
 
   useEffect(()=>{
     const jwtToken = localStorage.getItem("jwtToken");
@@ -46,7 +46,7 @@ function App() {
         reachOut && (
           <ReachOut
             // userInfo={userInfo}
-            // onClose={() => setReachOut(false)}
+            onClose={() => setReachOut(false)}
           />
         )
       }
