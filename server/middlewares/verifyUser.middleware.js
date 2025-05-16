@@ -21,9 +21,9 @@ export const verifyUser = async (req, res, next) =>{
         req.user = {
             _id: user._id,
             userId: user._id.toString(),
+            username: user.username,
             ...user.toObject()
         }; // Attach the user to the request object
-        // console.log("Attached user to request:", req.user); // Debug log
         next();
     } catch (error) {
         console.error("Auth error:", error); // Debug log

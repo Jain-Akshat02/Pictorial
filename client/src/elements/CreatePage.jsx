@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useColorModeValue } from '../components/ui/color-mode';
 import { toaster, Toaster } from '../components/ui/toaster.jsx';
 import UserImage from '../PhotoStore/userImage.jsx';
 import NeedSignin from './NeedSignin.jsx';
-const CreatePage = () => {
+const CreatePage = (e) => {
+  // e.preventDefault();
   const [newPhoto, setNewPhoto] = React.useState({
     title: "",
     image: "",
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const navigate = useNavigate();
 
   // Get color mode values
   const bgColor = useColorModeValue(
@@ -40,6 +39,7 @@ const CreatePage = () => {
   const jwtToken = localStorage.getItem("jwtToken");
   
   if(!jwtToken){
+    
     return(
       <div style={{
         minHeight: "100vh",

@@ -129,7 +129,7 @@ const LandingPage = () => {
         }}>
           {[
             {
-              title: "Share Your Moments",
+              title: "Share Your Clicks",
               description: "Upload and share your favorite photos with the world."
             },
             {
@@ -138,7 +138,7 @@ const LandingPage = () => {
             },
             {
               title: "Tell Your Story",
-              description: "Add descriptions and captions to your photos."
+              description: "Add captions to your photos."
             }
           ].map((feature, index) => (
             <div

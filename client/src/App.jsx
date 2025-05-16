@@ -10,21 +10,23 @@ import Signup from './userAuthPages/Signup.jsx';
 import ProfileCard from './elements/ProfileCard.jsx';
 import ReachOut from './elements/ReachOut.jsx';
 
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
-   const [reachOut, setReachOut] = useState(false);
+  const [reachOut, setReachOut] = useState(false);
 
-  useEffect(()=>{
-    const jwtToken = localStorage.getItem("jwtToken");
-    const user = localStorage.getItem("userInfo");
-    if(jwtToken && user){
+
+  useEffect(() => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const storedUserInfo = localStorage.getItem('userInfo');
+    
+    if (jwtToken && storedUserInfo) {
       setIsLoggedIn(true);
-      setUserInfo(JSON.parse(user));
+      setUserInfo(JSON.parse(storedUserInfo));
     }
   }, []);
-
   return (
     <Box minH={"100vh"} bg={useColorModeValue("gray.100", "slate.900")} color={useColorModeValue("gray.900", "gray.100")} >
       
@@ -38,6 +40,7 @@ function App() {
       {showProfile && (
         <ProfileCard
           userInfo={userInfo}
+          setShowProfile={setShowProfile}
           onClose={() => setShowProfile(false)}
           setReachOut={setReachOut}
         />
@@ -51,7 +54,6 @@ function App() {
       }
     </Box>
   )
-
 }
 
 export default App

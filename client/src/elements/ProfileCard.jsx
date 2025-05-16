@@ -1,10 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import { useColorModeValue } from "../components/ui/color-mode.jsx";
-
 const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
-  const [showConfirmation, setShowConfirmation] = React.useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
 
   const cardBg = useColorModeValue(
@@ -26,6 +25,10 @@ const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
     navigate("/");
     window.location.reload();
   };
+  const handleChangeUsernameClick = async ()=> {
+    await onClose();
+    navigate('/change-username');
+  }
 
   const handleLetsConnectClick = () =>{
     setReachOut(true);
@@ -112,7 +115,7 @@ const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
               fontWeight: "700",
               marginBottom: "20px"
             }}>
-              {userInfo?.username?.[0]?.toUpperCase() || "?"}
+              {userInfo?.username?.[0]?.toUpperCase() || "NA"}
             </div>
             <h3 style={{
               fontSize: "1.5rem",
@@ -142,33 +145,6 @@ const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
             flexDirection: "column",
             gap: "10px"
           }}>
-            <button
-              style={{
-                padding: "12px 16px",
-                borderRadius: "10px",
-                background: "transparent",
-                color: textColor,
-                fontSize: "1rem",
-                fontWeight: "500",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                transition: "all 0.3s ease"
-              }}
-              onMouseOver={(e) => {
-                e.target.style.background = hoverBg;
-                e.target.style.transform = "translateX(5px)";
-              }}
-              onMouseOut={(e) => {
-                e.target.style.background = "transparent";
-                e.target.style.transform = "translateX(0)";
-              }}
-            >
-              <span style={{ fontSize: "1.2rem" }}>👤</span>
-              Change Username
-            </button>
 
             <button
               style={{

@@ -101,10 +101,7 @@ const ReachOut = ({ onClose, setReachOut, setShowProfile }) => {
               alignItems: "center",
               marginBottom: "20px",
             }}
-          >
-            {" "}
-            Message from admin
-            {"  "}
+          >     
             <p
               style={{
                 fontSize: "1rem",
@@ -113,9 +110,7 @@ const ReachOut = ({ onClose, setReachOut, setShowProfile }) => {
                 marginBottom: "5px",
               }}
             >
-              Hello Everyone this is Akshat jain, I hope you are enjoying
-              PiCTORIAL, if you have any suggestions or feedback or you want to
-              connect with me, feel free to reach out.
+              Hello Everyone this is Akshat Jain
             </p>
           </div>
 

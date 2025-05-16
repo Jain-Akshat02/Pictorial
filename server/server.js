@@ -28,6 +28,7 @@ app.use("/images", express.static(path.join(__dirname, "/public/images")));
 app.use('/photos', photoRoutes);
 app.use('/auth', authRoutes); // Add this line to use the auth routes
 
+
 app.listen(PORT, () => {
     connectDB();  
 });
