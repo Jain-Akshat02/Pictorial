@@ -4,6 +4,8 @@ import { useColorModeValue } from "../components/ui/color-mode";
 import { LuDownload } from "react-icons/lu";
 import { LuImage, LuClock } from "react-icons/lu";
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const AllImages = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -47,7 +49,7 @@ const AllImages = () => {
     // const jwtToken = localStorage.getItem("jwtToken");
     const fetchImages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/photos");
+        const response = await axios.get(`${API_BASE_URL}/photos`);
         setImages(response.data.data); // Access the data property from response
         setLoading(false);
       } catch (error) {

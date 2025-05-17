@@ -4,6 +4,9 @@ import { useColorModeValue } from '../components/ui/color-mode';
 import { toaster, Toaster } from '../components/ui/toaster.jsx';
 import UserImage from '../PhotoStore/userImage.jsx';
 import NeedSignin from './NeedSignin.jsx';
+
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const CreatePage = (e) => {
   // e.preventDefault();
   const [newPhoto, setNewPhoto] = React.useState({
@@ -92,7 +95,7 @@ const CreatePage = (e) => {
         return;
       }
 
-      const response = await axios.post("http://localhost:5000/photos/upload-image", formData, {
+      const response = await axios.post(`${API_BASE_URL}/photos/upload-image`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${jwtToken}`

@@ -41,7 +41,7 @@ const UserImage = () => {
     try {
       const jwtToken = localStorage.getItem("jwtToken");
       const response = await axios.delete(
-        `http://localhost:5000/photos/${selectedImageId}`,
+        `${API_BASE_URL}/photos/${selectedImageId}`,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
@@ -85,7 +85,7 @@ const UserImage = () => {
       try {
         const jwtToken = localStorage.getItem("jwtToken");
         const response = await axios.get(
-          "http://localhost:5000/photos/my-photos",
+          `${API_BASE_URL}/photos/my-photos`,
           {
             headers: {
               Authorization: `Bearer ${jwtToken}`,
