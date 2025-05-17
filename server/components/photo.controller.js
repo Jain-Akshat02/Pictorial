@@ -85,6 +85,7 @@ export const createPhotos = async (req,res,cloudinaryResponse)=>{
  }
 
  export const deletePhoto = async (req,res) => {
+    console.log("hello  js");
     const {id} = req.params;
     // const photo = req.body;
     const userId = req.user._id;

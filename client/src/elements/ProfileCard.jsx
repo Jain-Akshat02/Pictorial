@@ -25,10 +25,6 @@ const ProfileCard = ({ userInfo, onClose, setReachOut, setShowProfile }) => {
     navigate("/");
     window.location.reload();
   };
-  const handleChangeUsernameClick = async ()=> {
-    await onClose();
-    navigate('/change-username');
-  }
 
   const handleLetsConnectClick = () =>{
     setReachOut(true);

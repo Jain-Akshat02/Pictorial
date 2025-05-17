@@ -8,7 +8,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { fileURLToPath } from "url";
 import path from "path";
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -20,7 +19,10 @@ const app = express();
 app.use(express.json()); //allows us to accept JSON data
 app.use(express.urlencoded({ extended: true })); //allows us to accept URL encoded data
 app.use(cookieParser());
-app.use(cors()); //allows us to accept requests from different origins
+app.use(cors(
+    {origin: 'http://localhost:5173', 
+     credentials: true}
+)); //allows us to accept requests from different origins
 
 
 

@@ -10,7 +10,8 @@ const UserImage = () => {
   const [error, setError] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [hoveredImage, setHoveredImage] = useState(null);
-
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [selectedImageId, setSelectedImageId] = useState(null);
   const mobileBreakpoint = 768;
 
   // Get color mode values
@@ -30,21 +31,28 @@ const UserImage = () => {
   const accentColor = useColorModeValue("#3b82f6", "#60a5fa");
   const secondaryColor = useColorModeValue("#64748b", "#94a3b8");
 
-  const handleDelete = async (_id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this image?"
-    );
-    if (!confirmDelete) return;
-    try {
-      const response = await axios.delete(
-        `http://localhost:5000/photos/${_id}`
-      );
 
-      if (response.status === 200 ) {
-        setImages(images.filter((image) => Photo._id !== _id));
-        console.log(`Image with ID ${_id} deleted successfully`);
+  const handleDeleteConfirmation = (imageId) => {
+    setSelectedImageId(imageId);
+    setShowConfirmation(true);
+  }
+
+  const handleDelete = async () => {
+    try {
+      const jwtToken = localStorage.getItem("jwtToken");
+      const response = await axios.delete(
+        `http://localhost:5000/photos/${selectedImageId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setImages(images.filter((image) => image._id !== selectedImageId));
+        setShowConfirmation(false);
+        setSelectedImageId(null);
       } else {
-        // Handle unexpected response status
         console.error(
           "Deletion failed with status:",
           response.status,
@@ -369,8 +377,8 @@ const UserImage = () => {
                 </h3>
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent the click from triggering parent handlers
-                    handleDelete(image._id); // Call the delete function
+                    e.preventDefault();
+                    handleDeleteConfirmation(image._id);
                   }}
                   style={{
                     position: "absolute", // Position the button
@@ -402,9 +410,99 @@ const UserImage = () => {
               </div>
             </div>
           ))}
+          {showConfirmation && (
+          <div style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+            maxWidth: "400px",
+            background: cardBg,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "20px",
+            padding: "30px",
+            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+            zIndex: 1000
+          }}>
+            <h3 style={{
+              fontSize: "1.5rem",
+              fontWeight: "600",
+              marginBottom: "20px",
+              color: textColor,
+              textAlign: "center"
+            }}>
+              Are you sure you want to Delete?
+            </h3>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              width: "100%"
+            }}>
+              <button
+                onClick={handleDelete}
+                style={{
+                  padding: "12px 24px",
+                  borderRadius: "10px",
+                  background: "#e53e3e",
+                  color: "white",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.background = "#c53030";
+                  e.target.style.transform = "translateY(-2px)";
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.background = "#e53e3e";
+                  e.target.style.transform = "translateY(0)";
+                }}
+              >
+                Delete Image
+              </button>
+              <button
+                onClick={() => {
+                  setShowConfirmation(false);
+                  setSelectedImageId(null);
+                }}
+                style={{
+                  padding: "12px 24px",
+                  borderRadius: "10px",
+                  background: "transparent",
+                  color: textColor,
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  border: `1px solid ${textColor}`,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease"
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.background = "rgba(0, 0, 0, 0.05)";
+                  e.target.style.transform = "translateY(-2px)";
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.background = "transparent";
+                  e.target.style.transform = "translateY(0)";
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+          
+        )}
         </div>
       </div>
     </div>
+
+    
   );
 };
 
