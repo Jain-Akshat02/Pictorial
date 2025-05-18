@@ -269,7 +269,7 @@ const Signup = () => {
                 background: inputBg,
                 outline: "none",
                 color: textColor
-              }}
+              }} //check 1
             />
           </div>
 
