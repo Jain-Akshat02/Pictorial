@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
-import {connectDB} from '../config/db.js';
+import {connectDB} from './config/db.js';
 import photoRoutes from './routes/photo.routes.js';
 import authRoutes from './routes/auth.router.js';
 import cors from 'cors';
