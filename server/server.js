@@ -20,9 +20,9 @@ app.use(express.json()); //allows us to accept JSON data
 app.use(express.urlencoded({ extended: true })); //allows us to accept URL encoded data
 app.use(cookieParser());
 app.use(cors(
-    {origin: 'https://pictorial-pi.vercel.app/', 
+    {origin: 'https://localhost:5173', 
      credentials: true}
-)); //allows us to accept requests from different origins
+)); 
 
 
 
