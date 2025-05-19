@@ -41,11 +41,6 @@ app.use("/images", express.static(path.join(__dirname, "/public/images")));
 app.use('/photos', photoRoutes);
 app.use('/auth', authRoutes); // Add this line to use the auth routes
 
-// Default route should be last
-app.get('*', (req, res) => {
-    res.send("hello world");
-});
-
 app.listen(PORT, () => {
     connectDB();  
 });
