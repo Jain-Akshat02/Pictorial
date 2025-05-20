@@ -21,12 +21,12 @@ app.use(cookieParser());
 
 // CORS configuration
 app.use(cors(
-    {
-    origin: 'http://localhost:5173',  // Your frontend URL
-    credentials: true,
-    // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}
+//     {
+//     origin: 'http://localhost:5173',  // Your frontend URL
+//     credentials: true,
+//     // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+// }
 )); 
 
 // Security headers
