@@ -296,7 +296,7 @@ const CreatePage = () => {
       </div>
       
     </div>
-    {/* <UserImage /> */}
+    <UserImage />
     </>
 
   
