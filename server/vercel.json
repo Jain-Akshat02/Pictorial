@@ -13,10 +13,6 @@
         {
             "src": "/(.*)",
             "dest": "/server.js"
-        },
-        {
-            "src": "/favicon.ico",
-            "dest": "/public/favicon.ico"
         }
     ]
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 import { Toaster, toaster } from '../components/ui/toaster';
 import { useColorModeValue } from "../components/ui/color-mode";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Signup = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = React.useState({
@@ -84,7 +84,7 @@ const Signup = () => {
     });
     try {
       // Sending data to the server
-      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+      const response = await axios.post(`http://localhost:5000/auth/register`, {
         username: userInfo.username,
         email: userInfo.email,
         password: userInfo.password,

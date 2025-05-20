@@ -4,7 +4,7 @@ import axios from "axios";
 import { Toaster, toaster } from "../components/ui/toaster";
 import { useColorModeValue } from "../components/ui/color-mode";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Login = ({setIsLoggedIn, setUserInfo}) => {
   const navigate = useNavigate();
   const [loginInfo, setloginInfo] = React.useState({
@@ -57,7 +57,7 @@ const Login = ({setIsLoggedIn, setUserInfo}) => {
 
     try{
       console.log("Sending login request with:", loginInfo);
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, 
+      const response = await axios.post(`http://localhost:5000/auth/login`, 
         {
           email: loginInfo.email,
           password: loginInfo.password
