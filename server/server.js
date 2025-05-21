@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 import {connectDB} from './config/db.js';
 import photoRoutes from './routes/photo.routes.js';
@@ -8,6 +7,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { fileURLToPath } from "url";
 import path from "path";
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
