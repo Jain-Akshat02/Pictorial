@@ -46,8 +46,46 @@ app.use("/images", express.static(path.join(__dirname, "/public/images")));
 app.use('/photos', photoRoutes);
 app.use('/auth', authRoutes); // Add this line to use the auth routes
 
-app.get('/favicon.ico', (req, res) => res.status(204));
-app.get('/',(req, res) => res.status(204))
+// Handle favicon.ico request
+app.get('/favicon.ico', (req, res, next) => {
+    try {
+        res.status(200).sendFile(path.join(__dirname, 'public', 'favicon.ico'), (err) => {
+            if (err) {
+                console.error('Error serving favicon:', err);
+                res.status(404).end();
+            }
+        });
+    } catch (error) {
+        console.error('Favicon error:', error);
+        res.status(404).end();
+    }
+});
+
+// Handle root path
+app.get('/', (req, res) => {
+    try {
+        res.status(200).json({
+            status: 'success',
+            message: 'Server is running',
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Root path error:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Internal server error'
+        });
+    }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Server error:', err);
+    res.status(500).json({
+        status: 'error',
+        message: 'Internal server error'
+    });
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
