@@ -63,19 +63,7 @@ app.get('/favicon.ico', (req, res, next) => {
 
 // Handle root path
 app.get('/', (req, res) => {
-    try {
-        res.status(200).json({
-            status: 'success',
-            message: 'Server is running',
-            timestamp: new Date().toISOString()
-        });
-    } catch (error) {
-        console.error('Root path error:', error);
-        res.status(500).json({
-            status: 'error',
-            message: 'Internal server error'
-        });
-    }
+   console.log(`Server listening on port ${port}`);
 });
 
 // Error handling middleware
