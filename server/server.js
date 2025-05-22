@@ -51,3 +51,22 @@ app.listen(PORT, () => {
     connectDB();  
 });
 
+
+// {   
+//     "version": 2,
+//     "builds": [
+//         {
+//             "src": "server.js",
+//             "use": "@vercel/node",
+//             "config": {
+//                 "nodeVersion": "20.x"
+//             }
+//         }
+//     ],
+//     "routes": [
+//         {
+//             "src": "/(.*)",
+//             "dest": "/server.js"
+//         }
+//     ]
+// }
