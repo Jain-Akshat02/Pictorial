@@ -1,101 +1,40 @@
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv'; // Keep this for now, less likely the cause
 import express from 'express';
-import {connectDB} from './config/db.js';
-import photoRoutes from './routes/photo.routes.js';
-import authRoutes from './routes/auth.router.js';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import { fileURLToPath } from "url";
-import path from "path";
-dotenv.config();
+// import {connectDB} from './config/db.js'; // Comment this and the connectDB() call below
+// import photoRoutes from './routes/photo.routes.js';
+// import authRoutes from './routes/auth.router.js';
+// import cors from 'cors';
+// import cookieParser from 'cookie-parser';
+// import { fileURLToPath } from "url"; // Keep these for __dirname
+// import path from "path";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// dotenv.config(); // Keep this for now
+
+// const __filename = fileURLToPath(import.meta.url); // Keep these for __dirname
+// const __dirname = path.dirname(__filename); // Keep these for __dirname
 
 const PORT = process.env.PORT || 5000;
-
 const app = express();
 
-app.use(express.json()); //allows us to accept JSON data
-app.use(express.urlencoded({ extended: true })); //allows us to accept URL encoded data
-app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// app.use(cookieParser()); // Comment this
+// app.use(cors()); // Comment this and its config
 
-// CORS configuration
-app.use(cors(
-//     {
-//     origin: 'http://localhost:5173',  // Your frontend URL
-//     credentials: true,
-//     // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-//     allowedHeaders: ['Content-Type', 'Authorization']
-// }
-)); 
+// ... security headers (keep for now, less likely the cause)
 
-// Security headers
-app.use((req, res, next) => {
-    res.setHeader(
-        'Content-Security-Policy',
-        "default-src 'self' http://localhost:*; connect-src 'self' http://localhost:*; img-src 'self' data: https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
-    );
-    next();
-});
+// app.use("/images", express.static(path.join(__dirname, "/public/images")));
 
-// Static files
-app.use("/images", express.static(path.join(__dirname, "/public/images")));
+// app.use('/photos', photoRoutes); // Comment this
+// app.use('/auth', authRoutes); // Comment this
 
-// Routes
-app.use('/photos', photoRoutes);
-app.use('/auth', authRoutes); // Add this line to use the auth routes
+// Keep favicon and root for basic server test
+// app.get('/favicon.ico', ...);
+// app.get('/', ...);
 
-// Handle favicon.ico request
-app.get('/favicon.ico', (req, res, next) => {
-    try {
-        res.status(200).sendFile(path.join(__dirname, 'public', 'favicon.ico'), (err) => {
-            if (err) {
-                console.error('Error serving favicon:', err);
-                res.status(404).end();
-            }
-        });
-    } catch (error) {
-        console.error('Favicon error:', error);
-        res.status(404).end();
-    }
-});
-
-// Handle root path
-app.get('/', (req, res) => {
-   console.log(`Server listening on port ${port}`);
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error('Server error:', err);
-    res.status(500).json({
-        status: 'error',
-        message: 'Internal server error'
-    });
-});
+// app.use((err, req, res, next) => { ... });
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    connectDB();  
+    // connectDB(); // Comment this
 });
-
-
-// {   
-//     "version": 2,
-//     "builds": [
-//         {
-//             "src": "server.js",
-//             "use": "@vercel/node",
-//             "config": {
-//                 "nodeVersion": "20.x"
-//             }
-//         }
-//     ],
-//     "routes": [
-//         {
-//             "src": "/(.*)",
-//             "dest": "/server.js"
-//         }
-//     ]
-// }
