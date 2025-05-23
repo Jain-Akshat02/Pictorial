@@ -21,7 +21,7 @@ export const registerUser = async (req, res) => {
         })
         UserModel.password = await bcrypt.hash(password, 10);
         await UserModel.save();
-        res.status(203).json()({success:true,  message: 'User created successfully', user: UserModel });
+        res.status(203).json({success:true,  message: 'User created successfully', user: UserModel });
 
     } catch (error) {
         res.status(400).json({ success: false , message: error.message });   
