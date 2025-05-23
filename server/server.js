@@ -58,7 +58,7 @@ app.get('/favicon.ico', (req, res, next) => {
 
 // Handle root path
 app.get('/', (req, res) => {
-   console.log(`Server listening on port ${port}`);
+   console.log(`Server listening on port ${PORT}`);
 });
 
 // Error handling middleware
