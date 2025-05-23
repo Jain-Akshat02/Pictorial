@@ -6,7 +6,7 @@
        "routes": [
          {
            "src": "/(.*)",
-           "dest": "/config/db.js"
+           "dest": "/server.js"
          }
        ]
      }
