@@ -1,4 +1,4 @@
-// import express from 'express';
+import express from 'express';
 import {connectDB} from './config/db.js';
 import photoRoutes from './routes/photo.routes.js';
 import authRoutes from './routes/auth.router.js';
@@ -81,3 +81,19 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDB();  
 });
+
+// {   
+//     "version": 2,
+//     "builds": [
+//         {
+//             "src": "server.js",
+//             "use": "@vercel/node"
+//         }
+//     ],
+//     "routes": [
+//         {
+//             "src": "/(.*)",
+//             "dest": "/server.js"
+//         }
+//     ]
+// }
