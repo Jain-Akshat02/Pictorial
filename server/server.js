@@ -23,14 +23,7 @@ app.use(express.urlencoded({ extended: true })); //allows us to accept URL encod
 app.use(cookieParser());
 
 // CORS configuration
-app.use(cors(
-//     {
-//     origin: 'http://localhost:5173',  // Your frontend URL
-//     credentials: true,
-//     // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-//     allowedHeaders: ['Content-Type', 'Authorization']
-// }
-)); 
+app.use(cors()); 
 
 // Security headers
 app.use((req, res, next) => {
@@ -81,19 +74,3 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDB();  
 });
-
-// {   
-//     "version": 2,
-//     "builds": [
-//         {
-//             "src": "server.js",
-//             "use": "@vercel/node"
-//         }
-//     ],
-//     "routes": [
-//         {
-//             "src": "/(.*)",
-//             "dest": "/server.js"
-//         }
-//     ]
-// }
