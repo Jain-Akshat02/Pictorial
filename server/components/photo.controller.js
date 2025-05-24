@@ -10,7 +10,7 @@ export const getPhotos = async (req, res) => {
         const skip = (page - 1) * limit;
 
         // Add index hint and lean() for better performance
-        const photos = await Photo.find({})
+        const photos = await Photo.find({}).maxTimeMS(20000)
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit)

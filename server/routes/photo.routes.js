@@ -17,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 //get all photos
-router.get("/", getPhotos),
+router.get("/", getPhotos)
   //protected routes
   // router.put('/:id',verifyUser, updatePhoto )
   router.delete("/:id", verifyUser, deletePhoto);
