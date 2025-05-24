@@ -58,6 +58,10 @@ app.get('/favicon.ico', (req, res, next) => {
 
 // Handle root path
 app.get('/', (req, res) => {
+    res.status(200).json({
+        status: 'success',
+        message: 'Welcome to the Photo App API'
+    });
    console.log(`Server listening on port ${PORT}`);
 });
 
