@@ -10,5 +10,16 @@ export default defineConfig({
         target:'http://localhost:5000',
       }
     }
+  },
+  build: {
+    chunkSizeWarningLimit: 1000,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-ui': ['@mui/material', '@mui/icons-material'],
+        }
+      }
+    }
   }
 })
