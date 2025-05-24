@@ -23,7 +23,12 @@ app.use(express.urlencoded({ extended: true })); //allows us to accept URL encod
 app.use(cookieParser());
 
 // CORS configuration
-app.use(cors()); 
+app.use(cors(
+    {
+        origin: 'https://pictorial-ebon.vercel.app/',
+        credentials: true
+    }
+)); 
 
 // Security headers
 app.use((req, res, next) => {
