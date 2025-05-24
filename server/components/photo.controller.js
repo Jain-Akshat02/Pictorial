@@ -11,7 +11,7 @@ export const getPhotos = async (req,res)=>{
             .populate('user', 'username')
         res.status(200).json({success: true, message: "Photos fetched successfully", data: photos});
     } catch (error) {
-        res.status(500).json({success: false, message: "Error fetching photos", error});
+        res.status(500).json({success: false, message: error.message, error});
     }
 }
 export const getUserPhotos = async (req, res) => {
