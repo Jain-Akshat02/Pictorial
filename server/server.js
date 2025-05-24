@@ -31,13 +31,13 @@ app.use(cors(
 )); 
 
 // Security headers
-app.use((req, res, next) => {
-    res.setHeader(
-        'Content-Security-Policy',
-        "default-src 'self' http://localhost:*; connect-src 'self' http://localhost:*; img-src 'self' data: https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
-    );
-    next();
-});
+// app.use((req, res, next) => {
+//     res.setHeader(
+//         'Content-Security-Policy',
+//         "default-src 'self' http://localhost:*; connect-src 'self' http://localhost:*; img-src 'self' data: https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+//     );
+//     next();
+// });
 
 // Static files
 app.use("/images", express.static(path.join(__dirname, "/public/images")));
