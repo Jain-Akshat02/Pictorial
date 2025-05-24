@@ -21,5 +21,9 @@ export default defineConfig({
         }
       }
     }
+  },
+  base: '/',
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'axios']
   }
 })
