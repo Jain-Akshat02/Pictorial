@@ -39,7 +39,9 @@ const photoSchema = new mongoose.Schema({
     timestamps: true
 });
 
-
+// Add compound index for sorting and querying
+photoSchema.index({ createdAt: -1 });
+photoSchema.index({ user: 1, createdAt: -1 });
 
 const Photo = mongoose.model('Photo', photoSchema);
 //products: that how mongoose handles pluralization of the model name

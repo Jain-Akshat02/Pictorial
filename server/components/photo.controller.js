@@ -3,17 +3,41 @@ import mongoose from "mongoose";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import User from "../models/User.models.js";
 
-
-export const getPhotos = async (req,res)=>{
+export const getPhotos = async (req, res) => {
     try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        // Add index hint and lean() for better performance
         const photos = await Photo.find({})
-            .sort({createdAt: -1})
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
             .populate('user', 'username')
-        res.status(200).json({success: true, message: "Photos fetched successfully", data: photos});
+            .lean()
+            .exec();
+
+        // Get total count for pagination
+        const totalPhotos = await Photo.countDocuments({});
+
+        res.status(200).json({
+            success: true,
+            message: "Photos fetched successfully",
+            data: photos,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(totalPhotos / limit),
+                totalPhotos,
+                hasMore: skip + photos.length < totalPhotos
+            }
+        });
     } catch (error) {
-        res.status(500).json({success: false, message: error.message, error});
+        console.error("Error in getPhotos:", error);
+        res.status(500).json({ success: false, message: error.message, error });
     }
 }
+
 export const getUserPhotos = async (req, res) => {
     try {
         const photos = await Photo.find({user: req.user._id})
