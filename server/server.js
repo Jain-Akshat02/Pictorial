@@ -23,12 +23,7 @@ app.use(express.urlencoded({ extended: true })); //allows us to accept URL encod
 app.use(cookieParser());
 
 // CORS configuration
-app.use(cors(
-    {
-        origin: 'https://pictorial-ebon.vercel.app/',
-        credentials: true
-    }
-)); 
+app.use(cors()); 
 
 // Security headers
 // app.use((req, res, next) => {
@@ -72,8 +67,7 @@ app.get('/', (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-    console.error('Server error:', err);
+app.use(( req, res, next) => {
     res.status(500).json({
         status: 'error',
         message: 'Internal server error'
