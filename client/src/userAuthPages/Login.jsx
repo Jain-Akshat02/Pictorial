@@ -4,7 +4,7 @@ import axios from "axios";
 import { Toaster, toaster } from "../components/ui/toaster";
 import { useColorModeValue } from "../components/ui/color-mode";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const Login = ({setIsLoggedIn, setUserInfo}) => {
   const navigate = useNavigate();
   const [loginInfo, setloginInfo] = React.useState({

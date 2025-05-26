@@ -23,7 +23,12 @@ app.use(express.urlencoded({ extended: true })); //allows us to accept URL encod
 app.use(cookieParser());
 
 // CORS configuration
-app.use(cors()); 
+app.use(cors({
+    origin: ["http://localhost:5173", "http://localhost:5000"],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+})); 
 
 // Security headers
 // app.use((req, res, next) => {
@@ -67,7 +72,8 @@ app.get('/', (req, res) => {
 });
 
 // Error handling middleware
-app.use(( req, res, next) => {
+app.use(( req, res, next, err) => {
+    console.log('Error:', err);
     res.status(500).json({
         status: 'error',
         message: 'Internal server error'

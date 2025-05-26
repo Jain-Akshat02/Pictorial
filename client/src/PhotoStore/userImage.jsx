@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useColorModeValue } from "../components/ui/color-mode";
 import { LuImage, LuClock } from "react-icons/lu";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 const UserImage = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
