@@ -19,6 +19,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.1",
+    "express": "^5.1.0",
+    "path": "^0.12.7",
+    "start": "^5.1.0"
   }
 }
