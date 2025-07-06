@@ -57,7 +57,7 @@ const Login = ({setIsLoggedIn, setUserInfo}) => {
 
     try{
       console.log("Sending login request with:", loginInfo);
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, 
+      const response = await axios.post(`/auth/login`, 
         {
           email: loginInfo.email,
           password: loginInfo.password

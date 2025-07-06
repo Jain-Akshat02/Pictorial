@@ -50,7 +50,7 @@ const AllImages = () => {
     // const jwtToken = localStorage.getItem("jwtToken");
     const fetchImages = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/photos`);
+        const response = await axios.get("/photos");
         setImages(response.data.data); // Access the data property from response
         setLoading(false);
       } catch (error) {

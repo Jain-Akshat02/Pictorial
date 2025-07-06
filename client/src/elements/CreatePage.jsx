@@ -76,9 +76,8 @@ const CreatePage = () => {
       
       return;
     }
-
     setIsUploading(true);
-    const formData = new FormData();
+    const formData = new FormData();  
     formData.append('image', selectedFile);
     formData.append("title", newPhoto.title);
     formData.append("description", newPhoto.description);           
@@ -97,7 +96,7 @@ const CreatePage = () => {
         return;
       }
 
-      const response = await axios.post(`http://localhost:5000/photos/upload-image`, formData, {
+      const response = await axios.post("/photos/upload-image", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${jwtToken}`

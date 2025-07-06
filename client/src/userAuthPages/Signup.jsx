@@ -84,7 +84,7 @@ const Signup = () => {
     });
     try {
       // Sending data to the server
-      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+      const response = await axios.post(`/auth/register`, {
         username: userInfo.username,
         email: userInfo.email,
         password: userInfo.password,

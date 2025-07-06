@@ -10,7 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.resolve();
 
 // const __filename = require('url').fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -32,7 +32,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 })); 
 
-// Security headers
+//Security Headers
+
 // app.use((req, res, next) => {
 //     res.setHeader(
 //         'Content-Security-Policy',
@@ -81,7 +82,13 @@ app.use(( req, res, next, err) => {
         message: 'Internal server error'
     });
 });
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/dist')));
 
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+    });
+}
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDB();  
