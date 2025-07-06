@@ -4,12 +4,10 @@ import photoRoutes from './routes/photo.routes.js';
 import authRoutes from './routes/auth.router.js';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { fileURLToPath } from "url";
 import path from "path";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.resolve();
 
 // const __filename = require('url').fileURLToPath(import.meta.url);
