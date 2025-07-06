@@ -62,15 +62,15 @@ app.get('/favicon.ico', (req, res, next) => {
     }
 });
 
-// Handle root path
-app.get('/', (req, res) => {
-    res.status(200).json({
-        activeStatus: true,
-        status: 'success',
-        message: 'Welcome to the Photo App API'
-    });
-   console.log(`Server listening on port ${PORT}`);
-});
+// // Handle root path
+// app.get('/', (req, res) => {
+//     res.status(200).json({
+//         activeStatus: true,
+//         status: 'success',
+//         message: 'Welcome to the Photo App API'
+//     });
+//    console.log(`Server listening on port ${PORT}`);
+// });
 
 // Error handling middleware
 app.use(( req, res, next, err) => {
