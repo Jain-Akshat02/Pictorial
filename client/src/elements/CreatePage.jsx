@@ -4,11 +4,11 @@ import { useColorModeValue } from '../components/ui/color-mode';
 import { toaster, Toaster } from '../components/ui/toaster.jsx';
 import UserImage from '../PhotoStore/userImage.jsx';
 import NeedSignin from './NeedSignin.jsx';
+import dotenv from 'dotenv';
 
+dotenv.config();  
 
-// dotenv.config();  
-
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const CreatePage = () => {
   // e.preventDefault();
   const [newPhoto, setNewPhoto] = React.useState({
@@ -80,7 +80,7 @@ const CreatePage = () => {
     const formData = new FormData();  
     formData.append('image', selectedFile);
     formData.append("title", newPhoto.title);
-    formData.append("description", newPhoto.description);           
+           
 
     try {
       const jwtToken = localStorage.getItem("jwtToken");
@@ -96,7 +96,7 @@ const CreatePage = () => {
         return;
       }
 
-      const response = await axios.post("/photos/upload-image", formData, {
+      const response = await axios.post(`${API_BASE_URL}/photos/upload-image`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${jwtToken}`

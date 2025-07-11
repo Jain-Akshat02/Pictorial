@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toaster } from "../components/ui/toaster";
 import { useColorModeValue } from "../components/ui/color-mode";
-
+import dotenv from "dotenv";
+dotenv.config();
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const Login = ({setIsLoggedIn, setUserInfo}) => {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ const Login = ({setIsLoggedIn, setUserInfo}) => {
 
     try{
       console.log("Sending login request with:", loginInfo);
-      const response = await axios.post(`/auth/login`, 
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, 
         {
           email: loginInfo.email,
           password: loginInfo.password

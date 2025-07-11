@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Toaster, toaster } from '../components/ui/toaster';
 import { useColorModeValue } from "../components/ui/color-mode";
+import dotenv from "dotenv";
 
+dotenv.config();
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const Signup = () => {
   const navigate = useNavigate();

@@ -3,8 +3,8 @@ import axios from "axios";
 import { useColorModeValue } from "../components/ui/color-mode";
 import { LuDownload } from "react-icons/lu";
 import { LuImage, LuClock } from "react-icons/lu";
-
-// dotenv.config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 const AllImages = () => {
@@ -50,7 +50,7 @@ const AllImages = () => {
     // const jwtToken = localStorage.getItem("jwtToken");
     const fetchImages = async () => {
       try {
-        const response = await axios.get("/photos");
+        const response = await axios.get(`${API_BASE_URL}/photos`);
         setImages(response.data.data); // Access the data property from response
         setLoading(false);
       } catch (error) {

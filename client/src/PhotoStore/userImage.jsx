@@ -1,9 +1,9 @@
-import React from "react";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useColorModeValue } from "../components/ui/color-mode";
 import { LuImage, LuClock } from "react-icons/lu";
-
+import dotenv from "dotenv";
+dotenv.config();
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 const UserImage = () => {
@@ -43,7 +43,7 @@ const UserImage = () => {
     try {
       const jwtToken = localStorage.getItem("jwtToken");
       const response = await axios.delete(
-        `/photos/${selectedImageId}`,
+        `${API_BASE_URL}/photos/${selectedImageId}`,
         {
           headers: {
             Authorization: `Bearer ${jwtToken}`,
